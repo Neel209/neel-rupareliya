@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Neel Rupareliya - ATS Resume</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 7mm 11mm;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    background: #ffffff;
+    font-size: 8.1pt;
+    line-height: 1.25;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Header */
+  .header {
+    text-align: center;
+    border-bottom: 1.5px solid #1e3a8a;
+    padding-bottom: 4px;
+    margin-bottom: 5px;
+  }
+  .header h1 {
+    font-size: 16.5pt;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #0f172a;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+  }
+  .header .title {
+    font-size: 9.6pt;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 2px;
+  }
+  .header .contact-row {
+    font-size: 8pt;
+    color: #334155;
+  }
+  .header .contact-row a {
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .header .contact-row a.link-highlight {
+    color: #0369a1;
+    font-weight: 600;
+  }
+  .header .contact-row a:hover {
+    text-decoration: underline;
+  }
+  .separator {
+    color: #94a3b8;
+    margin: 0 4px;
+  }
+
+  /* Section Styling */
+  .section {
+    margin-bottom: 5px;
+  }
+  .section-title {
+    font-size: 8.8pt;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 1px;
+    margin-bottom: 3.5px;
+  }
+
+  /* Text & Paragraphs */
+  p.profile-text {
+    font-size: 7.95pt;
+    text-align: justify;
+    color: #334155;
+    line-height: 1.26;
+  }
+
+  /* Items (Experience / Projects) */
+  .item {
+    margin-bottom: 4.5px;
+  }
+  .item:last-child {
+    margin-bottom: 0;
+  }
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+  .item-title {
+    font-size: 8.35pt;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .item-subtitle {
+    font-size: 8pt;
+    font-weight: 600;
+    color: #334155;
+  }
+  .item-date {
+    font-size: 7.7pt;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+  }
+  .tech-stack {
+    font-size: 7.75pt;
+    color: #475569;
+    margin-bottom: 1.5px;
+  }
+  .tech-stack strong {
+    color: #1e293b;
+  }
+  .link-badge {
+    color: #0369a1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 7.9pt;
+  }
+  .link-badge:hover {
+    text-decoration: underline;
+  }
+
+  /* Bullet lists */
+  ul.bullets {
+    list-style-type: disc;
+    padding-left: 13px;
+    margin-top: 1px;
+  }
+  ul.bullets li {
+    font-size: 7.85pt;
+    color: #334155;
+    margin-bottom: 1.2px;
+    line-height: 1.23;
+    text-align: justify;
+  }
+  ul.bullets li strong {
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  /* Skills list */
+  .skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8px;
+  }
+  .skill-row {
+    font-size: 7.85pt;
+    color: #334155;
+    line-height: 1.23;
+  }
+  .skill-row strong {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  /* Education */
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 7.95pt;
+    margin-bottom: 1.5px;
+  }
+  .edu-row:last-child {
+    margin-bottom: 0;
+  }
+  .edu-degree {
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .edu-school {
+    color: #334155;
+    font-weight: 500;
+  }
+  .edu-date {
+    font-size: 7.7pt;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Neel Rupareliya</h1>
+    <div class="title">Python &amp; Full-Stack Developer</div>
+    <div class="contact-row">
+      <a href="mailto:neelrupareliya09@gmail.com">neelrupareliya09@gmail.com</a>
+      <span class="separator">|</span>
+      <a href="tel:+918469790287">+91 8469790287</a>
+      <span class="separator">|</span>
+      <a class="link-highlight" href="https://www.linkedin.com/in/neelrupareliya" target="_blank">linkedin.com/in/neelrupareliya &#x2197;</a>
+      <span class="separator">|</span>
+      <a class="link-highlight" href="https://github.com/Neel209" target="_blank">github.com/Neel209 &#x2197;</a>
+      <span class="separator">|</span>
+      <span>Gujarat, India</span>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="section">
+    <div class="section-title">Professional Summary</div>
+    <p class="profile-text">
+      Results-driven Python Developer specializing in scalable web backends, browser automation pipelines, and SaaS platforms. Proficient in Python, Flask, Playwright, hybrid database architectures (MongoDB/SQLite fail-safe), and RESTful APIs. Adept at leveraging modern AI engineering tools (Claude, Cursor, OpenAI Codex) to accelerate production-grade software delivery with rigorous reliability.
+    </p>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">Work Experience</div>
+    <div class="item">
+      <div class="item-header">
+        <div>
+          <span class="item-title">Python Developer Intern</span>
+          <span class="item-subtitle"> &bull; 4born Solutions</span>
+        </div>
+        <span class="item-date">Nov 2025 &ndash; May 2026 | Bhavnagar, India</span>
+      </div>
+      <ul class="bullets">
+        <li>Developed and maintained multiple production Python/Flask applications serving live client operations across diverse domains.</li>
+        <li>Architected modular RESTful APIs with role-based authentication (RBAC), secure session handling, and encrypted payload verification.</li>
+        <li>Built backend integrations for payment gateways, automated WinSCP FTP file pipelines, and scheduled cron jobs.</li>
+        <li>Employed AI-assisted development tools (Claude, Cursor, Codex) to boost code quality, test coverage, and delivery speed.</li>
+        <li>Collaborated closely in Agile sprint planning, CI/CD code reviews, and issue tracking using Git, GitHub, and Jira.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-title">Key Projects</div>
+
+    <!-- Trade Masters -->
+    <div class="item">
+      <div class="item-header">
+        <div>
+          <span class="item-title">Trade Masters &ndash; Full-Stack Algorithmic Trading &amp; FinTech SaaS Platform</span>
+          <span class="separator">|</span>
+          <a class="link-badge" href="https://trademasters.co.in" target="_blank">trademasters.co.in &#x2197;</a>
+        </div>
+        <span class="item-date">Solo Full-Stack Developer</span>
+      </div>
+      <div class="tech-stack"><strong>Tech Stack:</strong> Python, Flask, MongoDB Atlas, SQLite, WebSockets, JavaScript, TradingView Pine Script &amp; API, Chart.js</div>
+      <ul class="bullets">
+        <li><strong>Architecture &amp; Backend:</strong> Architected and deployed an end-to-end FinTech subscription SaaS using Python (Flask) with a hybrid database layer (MongoDB Atlas with automated SQLite fail-safe fallback), processing zero-downtime queries.</li>
+        <li><strong>Automated Provisioning Engine:</strong> Engineered a TradingView invite-only indicator access system that connects to TradingView servers to dynamically whitelist, verify, and revoke pine script indicators upon trial/subscription lifecycle events.</li>
+        <li><strong>Payment &amp; Autopay Lifecycle:</strong> Built a recurring billing engine with coupon redemption, dynamic GST calculations, auto-renewal workflows, and 7-day automated trial transitions with multi-tier subscription options.</li>
+        <li><strong>Real-Time Data &amp; Telemetry:</strong> Integrated multi-source financial RSS feeds and automated parsers into a low-latency sentiment aggregation engine, categorizing news across Equities, Forex, Commodities, and Crypto.</li>
+        <li><strong>High-Performance Front-End:</strong> Developed an interactive SPA router with vanilla JavaScript, dynamic Chart.js backtest visualizers, live Telegram bot auto-kicks on expiration, and a responsive glassmorphic UI.</li>
+      </ul>
+    </div>
+
+    <!-- Financial Market Chart Automation -->
+    <div class="item">
+      <div class="item-header">
+        <div>
+          <span class="item-title">Financial Market Chart Automation &amp; Alert Pipeline</span>
+          <span class="separator">|</span>
+          <a class="link-badge" href="https://github.com/Neel209/Telegram_automation" target="_blank">github.com/Neel209/Telegram_automation &#x2197;</a>
+        </div>
+        <span class="item-date">Lead Developer</span>
+      </div>
+      <div class="tech-stack"><strong>Tech Stack:</strong> Python, Playwright, Chromium, GitHub Actions CI/CD, Telegram Bot API, REST APIs</div>
+      <ul class="bullets">
+        <li>Engineered an end-to-end automated market intelligence pipeline capturing and broadcasting multi-asset technical charts (NSE Indices, Commodities, Forex) to Telegram trading channels.</li>
+        <li>Implemented headless browser automation with Playwright/Chromium, configuring custom authenticated session state, viewport rendering, anti-bot stealth parameters, and interactive chart resets.</li>
+        <li>Integrated real-time NSE Holiday API and weekend schedule filtering in IST timezone to dynamically bypass executions on non-trading days, reducing redundant compute cycles.</li>
+        <li>Deployed automated CI/CD workflows using GitHub Actions and encrypted secrets management, ensuring secure, scheduled, zero-downtime execution.</li>
+      </ul>
+    </div>
+
+    <!-- ProofAI -->
+    <div class="item">
+      <div class="item-header">
+        <div>
+          <span class="item-title">ProofAI &ndash; Multi-Modal AI vs Human Content Detector</span>
+          <span class="separator">|</span>
+          <a class="link-badge" href="https://proofai-app.4born.com" target="_blank">proofai-app.4born.com &#x2197;</a>
+        </div>
+        <span class="item-date">Backend Developer</span>
+      </div>
+      <div class="tech-stack"><strong>Tech Stack:</strong> Python, Flask, MySQL, REST APIs, Open-Source LLMs, Claude, OpenAI Codex</div>
+      <ul class="bullets">
+        <li>Engineered a multi-modal detection engine classifying text, images, and documents as AI-generated or human-written via model ensembles.</li>
+        <li>Designed RESTful Flask endpoints supporting multi-file uploads, async preprocessing pipelines, and confidence-score distributions.</li>
+        <li>Implemented normalized MySQL schemas with parameterized queries and indexing for rapid detection history retrieval and session auditing.</li>
+      </ul>
+    </div>
+
+    <!-- Kahaan Jewels -->
+    <div class="item">
+      <div class="item-header">
+        <div>
+          <span class="item-title">Kahaan Jewels &ndash; E-Commerce Platform &amp; Automation</span>
+          <span class="separator">|</span>
+          <a class="link-badge" href="https://kahaanjewels.com" target="_blank">kahaanjewels.com &#x2197;</a>
+        </div>
+        <span class="item-date">Backend Developer</span>
+      </div>
+      <div class="tech-stack"><strong>Tech Stack:</strong> Python, WinSCP Scripting, Cron Jobs, MySQL, Flask</div>
+      <ul class="bullets">
+        <li>Implemented a session-based "Recently Viewed" recommendation system with optimized database caching, reducing query load by ~40%.</li>
+        <li>Built an automated WinSCP Python synchronization script running on scheduled cron jobs to securely sync client assets to FTP servers.</li>
+        <li>Resolved critical supplier portal issues, including pagination logic and FTP upload retries, significantly improving operational stability.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TECHNICAL SKILLS -->
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-container">
+      <div class="skill-row"><strong>Languages:</strong> Python, JavaScript (ES6+), Pine Script, SQL, HTML5, CSS3</div>
+      <div class="skill-row"><strong>Frameworks &amp; Libraries:</strong> Flask, Playwright, Jinja2, WebSockets, RESTful API Design, Chart.js</div>
+      <div class="skill-row"><strong>Databases &amp; Storage:</strong> MongoDB Atlas, SQLite, MySQL (Hybrid Caching, Failover &amp; Query Optimization)</div>
+      <div class="skill-row"><strong>Automation &amp; CI/CD:</strong> Playwright, GitHub Actions, WinSCP Automation, Cron Jobs, Telegram Bot API</div>
+      <div class="skill-row"><strong>AI &amp; Developer Tools:</strong> Claude (Anthropic), Cursor AI, OpenAI Codex, GitHub Copilot, VS Code</div>
+      <div class="skill-row"><strong>Tools &amp; Concepts:</strong> Git, GitHub, Jira, Postman, Linux/VPS, SaaS Architecture, Automated Provisioning, Zero-Downtime Design</div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section" style="margin-bottom: 0;">
+    <div class="section-title">Education</div>
+    <div class="edu-row">
+      <div>
+        <span class="edu-degree">Master of Computer Applications (MCA)</span>
+        <span class="edu-school"> &ndash; Maharaja Krushnakumarsinhji Bhavnagar University, Bhavnagar</span>
+      </div>
+      <span class="edu-date">Pursuing</span>
+    </div>
+    <div class="edu-row">
+      <div>
+        <span class="edu-degree">Bachelor of Computer Applications (BCA)</span>
+        <span class="edu-school"> &ndash; The Maharaja Sayajirao University of Baroda, Vadodara</span>
+      </div>
+      <span class="edu-date">2022 &ndash; 2025 | <strong>CGPA: 7.3</strong></span>
+    </div>
+  </div>
+
+</body>
+</html>

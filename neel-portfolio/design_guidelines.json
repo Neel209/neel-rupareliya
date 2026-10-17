@@ -1,0 +1,149 @@
+{
+  "project_name": "Neel Rupareliya Portfolio - Python Developer & Automation Engineer",
+  "art_direction": {
+    "theme": "Developer Terminal / Command-Line Meets Avant-Garde Dark Aesthetic",
+    "archetype": "Architectural Tech & Signal Cyber (Swiss High-Contrast + Dark Neo-Brutalist Terminal)",
+    "vibe": "Awwwards Site-of-the-Day level, tactile developer command center, kinetic typography, precision automation pipeline visuals",
+    "color_palette": {
+      "background_primary": "#07090E",
+      "background_secondary": "#0D111A",
+      "surface_card": "rgba(15, 23, 42, 0.75)",
+      "border_color": "rgba(34, 197, 94, 0.2)",
+      "border_accent": "#10B981",
+      "accent_signal_green": "#10B981",
+      "accent_neon_glow": "#00FF66",
+      "accent_cyan_flow": "#06B6D4",
+      "accent_amber": "#F59E0B",
+      "text_primary": "#F8FAFC",
+      "text_muted": "#94A3B8",
+      "text_terminal_dim": "#475569"
+    },
+    "typography": {
+      "hero_title": {
+        "font_family": "Syne, sans-serif",
+        "font_weight": "800",
+        "desktop_size": "text-5xl lg:text-6xl",
+        "letter_spacing": "tracking-tight"
+      },
+      "code_headings": {
+        "font_family": "Fira Code, JetBrains Mono, monospace",
+        "font_weight": "700"
+      },
+      "body": {
+        "font_family": "Fira Code, JetBrains Mono, monospace",
+        "font_weight": "400"
+      }
+    }
+  },
+  "key_features_and_components": [
+    {
+      "name": "Kinetic Hero Section with Masked Line-by-Line Reveal",
+      "description": "Bold headline text with line-by-line overflow-hidden masked reveal animation using Framer Motion. Embedded signature prompt string (e.g., '>_ NEEL RUPARELIYA'). Includes quick bio, key stats counters (4+ Years Exp, 40% Automation Boost, 100+ Projects, MCA Degree), CTA buttons ('Explore CLI Terminal', 'Initiate Project'), and live status badge ('STATUS: Available for Automation & Architecture Work')."
+    },
+    {
+      "name": "Three.js Interactive 3D Hero Object",
+      "description": "Interactive 3D geometry canvas floating alongside or behind hero title. Features rotating wireframe dodecahedron / particle cyber core reacting smoothly to mouse move cursor coordinates."
+    },
+    {
+      "name": "Slow Editorial Marquee Strip",
+      "description": "Drifting kinetic banner with monospace & display text separator showing core specializations: 'PYTHON AUTOMATION • PINE SCRIPT WEBSOCKETS • TELEGRAM BOT API • FLASK BILLING PIPELINE • ASYNC ARCHITECTURE'."
+    },
+    {
+      "name": "Developer Profile Code Card",
+      "description": "Syntactically highlighted IDE window component with code editor header (buttons, tab 'neel_profile.py'). Displays real Python code object defining Neel's skills, background, tech stack dictionary, and executed output log in real-time."
+    },
+    {
+      "name": "System Architecture Flow Diagram Section",
+      "description": "Interactive visual pipeline representing the automated workflow: TradingView Indicator Access & Lifecycle Management (Flask Billing API → Webhook Dispatcher → Pine Script Server → Telegram Bot API). Includes pulse animation on connector lines, node status badges, and interactive click-to-inspect details for each architecture node."
+    },
+    {
+      "name": "Bento-Style Featured Projects Grid",
+      "description": "Asymmetric Bento Grid showcasing major software products (Trade Masters, Market Chart Automation & Telegram Alerts, ProofAI, Kahanan Jewels). Features 3D tilt hover effects, metric badges (e.g. '10k+ Trades/Day', '99.9% Uptime'), tech stack tags, demo/code modal drawers, and visual preview cards."
+    },
+    {
+      "name": "Work Experience Timeline",
+      "description": "High-contrast technical timeline for Python Developer Intern at LiBest Solutions, Bhavnagar (Nov 2023 – May 2024). Includes key achievements, automated script highlights, and impact metrics."
+    },
+    {
+      "name": "Technical Skills & Stack Matrix Grid",
+      "description": "Categorized grid covering Languages (Python, Pine Script, SQL, JavaScript), Frameworks & Libraries (Flask, FastAPI, Selenium, PyTest, Pandas), Databases & Storage (MongoDB, PostgreSQL, Redis), Automation & DevOps (Docker, Git, Webhooks, Telegram API, Cron Jobs), and Developer Tools (VS Code, Postman, Linux CLI)."
+    },
+    {
+      "name": "Degrees & Credentials Section",
+      "description": "Card deck presenting MCA (Master of Computer Applications) and BCA (Bachelor of Computer Applications) with credential verification badges and specialization highlights."
+    },
+    {
+      "name": "Working Interactive Terminal CLI Section",
+      "description": "Realistic dark terminal console component with custom command prompt (neel@automation-core:~$). Supports interactive typed commands: 'help', 'about', 'skills', 'projects', 'contact', 'architecture', 'clear', 'sudo hire-neel'. Output renders formatted terminal tables and links."
+    },
+    {
+      "name": "Contact Section - 'Let's Build Something Exceptional'",
+      "description": "High-impact contact block featuring direct contact details (email: neelrupareliya59@gmail.com, phone: +91 81419 69437), location (Bhavnagar, India), social links (GitHub, LinkedIn, Telegram), and interactive form that connects to MongoDB via Python FastAPI backend with instant toast feedback."
+    }
+  ],
+  "image_urls": [
+    {
+      "url": "https://images.unsplash.com/photo-1646444254678-b937f153b221?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwxfHxkYXJrJTIwYWJzdHJhY3QlMjAzZCUyMG5lb24lMjBncmVlbiUyMGdlb21ldHJ5JTIwdGVjaG5vbG9neSUyMGN5YmVyfGVufDB8fHx8MTc5MjIyNDMzM3ww&ixlib=rb-4.1.0&q=85",
+      "category": "3d_hero_abstract_fallback",
+      "description": "Black and green abstract 3D core object for high-tech background visual accent"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1648614593495-e0955bf287e5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHszfHxkYXJrJTIwYWJzdHJhY3QlMjAzZCUyMG5lb24lMjBncmVlbiUyMGdlb21ldHJ5JTIwdGVjaG5vbG9neSUyMGN5YmVyfGVufDB8fHx8MTc5MjIyNDMzM3ww&ixlib=rb-4.1.0&q=85",
+      "category": "system_architecture_bg",
+      "description": "Matrix lines & green grid sequence for automated node background styling"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1645788437811-2ff9e2104423?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHw0fHxkYXJrJTIwYWJzdHJhY3QlMjAzZCUyMG5lb24lMjBncmVlbiUyMGdlb21ldHJ5JTIwdGVjaG5vbG9neSUyMGN5YmVyfGVufDB8fHx8MTc5MjIyNDMzM3ww&ixlib=rb-4.1.0&q=85",
+      "category": "project_card_preview_bg",
+      "description": "Green cyber grid geometry for project showcase visual accent"
+    }
+  ],
+  "layout_and_spacing_strategy": {
+    "container_padding": "px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto",
+    "section_gap": "py-24 lg:py-32",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8",
+    "card_padding": "p-6 lg:p-8",
+    "glassmorphism": "backdrop-blur-xl bg-slate-950/70 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.05)] hover:border-emerald-500/50 transition-all duration-300"
+  },
+  "testing_and_accessibility_requirements": {
+    "data_testid_policy": "All interactive elements (buttons, inputs, tabs, project cards, terminal input, links) MUST have explicit data-testid attributes in kebab-case format.",
+    "key_test_ids": [
+      "nav-brand-logo",
+      "nav-link-hero",
+      "nav-link-architecture",
+      "nav-link-projects",
+      "nav-link-skills",
+      "nav-link-terminal",
+      "nav-link-contact",
+      "hero-cta-terminal",
+      "hero-cta-contact",
+      "stats-counter-years",
+      "stats-counter-boost",
+      "stats-counter-projects",
+      "developer-profile-card",
+      "arch-node-flask-api",
+      "arch-node-webhook-dispatcher",
+      "arch-node-pinescript-server",
+      "arch-node-telegram-bot",
+      "project-card-trade-masters",
+      "project-card-market-chart",
+      "project-card-proof-ai",
+      "project-card-kahanan-jewels",
+      "terminal-input",
+      "terminal-output-container",
+      "contact-form-name",
+      "contact-form-email",
+      "contact-form-message",
+      "contact-form-submit"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the dark avant-garde developer command line aesthetic with signal green (#10B981) accents.",
+    "Implement Lenis smooth scrolling and Framer Motion for line-by-line kinetic hero reveal and section entrance triggers.",
+    "Ensure Three.js / React Three Fiber interactive 3D canvas is embedded in the hero section with particle/geometry rotation and mouse position tilt.",
+    "Ensure the terminal CLI is fully functional with interactive typing, response rendering for 'skills', 'projects', 'contact', 'help', 'clear', and 'about'.",
+    "Ensure system architecture pipeline interactive diagram clearly displays Flask Billing API → Webhook Dispatcher → Pine Script Server → Telegram Bot API flow with pulsing data nodes.",
+    "Every clickable or focusable element must have a clear hover state and explicit data-testid attribute.",
+    "Verify contact form sends POST request to backend API storing messages in MongoDB, showing Sonner toast on success."
+  ]
+}

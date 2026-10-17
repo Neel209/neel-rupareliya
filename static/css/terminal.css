@@ -1,0 +1,108 @@
+/* ==========================================================================
+   INTERACTIVE DEVELOPER TERMINAL (NEEL.ENV CLI)
+   Theme: Realistic dark terminal console with CRT scanline and syntax highlighter
+   ========================================================================== */
+
+.terminal-window {
+  position: relative;
+  background: #090d15;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 0.85rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 30px rgba(16, 185, 129, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-bar {
+  background: #0d121c;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.terminal-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+}
+
+.dot-red { background: rgba(239, 68, 68, 0.8); }
+.dot-yellow { background: rgba(245, 158, 11, 0.8); }
+.dot-green { background: rgba(16, 185, 129, 0.8); }
+
+.terminal-body {
+  position: relative;
+  background: #07090e;
+  padding: 1.25rem;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #cbd5e1;
+  min-height: 320px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+/* Syntax Highlighting Colors */
+.t-green { color: #10b981; font-weight: 600; }
+.t-cyan { color: #06b6d4; font-weight: 600; }
+.t-yellow { color: #f59e0b; }
+.t-red { color: #f87171; }
+.t-dim { color: #64748b; }
+.t-white { color: #f8fafc; font-weight: 600; }
+
+.t-link {
+  color: #10b981;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.t-link:hover {
+  color: #34d399;
+}
+
+/* Terminal Cursor */
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: #10b981;
+  vertical-align: middle;
+  margin-left: 3px;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Terminal Action Buttons / Quick Chips */
+.cmd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.375rem;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  background: rgba(16, 185, 129, 0.06);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cmd-chip:hover {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: #10b981;
+  color: #f8fafc;
+  transform: translateY(-1px);
+}

@@ -1,0 +1,279 @@
+/* ==========================================================================
+   NEEL RUPARELIYA — AVANT-GARDE CYBER TERMINAL DESIGN SYSTEM
+   Theme: Developer Terminal / Command-Line Meets Avant-Garde Dark Aesthetic
+   Archetype: Architectural Tech & Signal Cyber (Swiss High-Contrast + Dark Neo-Brutalist)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #07090e;
+  --bg-secondary: #0d111a;
+  --bg-card: rgba(13, 17, 26, 0.85);
+  --border-emerald: rgba(16, 185, 129, 0.22);
+  --border-emerald-glow: rgba(16, 185, 129, 0.6);
+  --emerald-signal: #10b981;
+  --cyan-flow: #06b6d4;
+  --amber-accent: #f59e0b;
+  --neon-glow: #00ff66;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #475569;
+  
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* Base Document */
+html {
+  scroll-behavior: auto; /* Handled smoothly by Lenis */
+}
+
+html, body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--emerald-signal);
+  color: var(--bg-primary);
+}
+
+/* Custom Emerald Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07090e;
+}
+::-webkit-scrollbar-thumb {
+  background: #134e3a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* Typography Classes */
+.font-display {
+  font-family: 'Syne', sans-serif;
+}
+.font-mono-code {
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+/* Film Grain Texture Overlay */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Cyber Matrix Background Grid */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(16, 185, 129, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Neon Glow Typography */
+.glow-text {
+  text-shadow: 0 0 24px rgba(16, 185, 129, 0.45);
+}
+
+.glow-cyan {
+  text-shadow: 0 0 24px rgba(6, 182, 212, 0.45);
+}
+
+/* Editorial Infinite Marquee Ribbon */
+@keyframes marquee-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee-drift 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pipeline Flow Connectors (Pulsing dashed stroke) */
+@keyframes flow-dash {
+  to { stroke-dashoffset: -24; }
+}
+
+.flow-line {
+  stroke-dasharray: 6 6;
+  animation: flow-dash 1.2s linear infinite;
+}
+
+/* Architecture Node Pulse Glow */
+@keyframes pulse-node {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35); }
+  50% { box-shadow: 0 0 24px 4px rgba(16, 185, 129, 0.18); }
+}
+
+.node-pulse {
+  animation: pulse-node 2.6s ease-in-out infinite;
+}
+
+/* CRT Terminal Scanline */
+@keyframes scanline {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+.terminal-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.07), transparent);
+  animation: scanline 4.5s linear infinite;
+  pointer-events: none;
+}
+
+/* 3D Tilt Card Wrapper */
+.tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tilt-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Soft Ambient Spotlight */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(650px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(16, 185, 129, 0.12), transparent 45%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Glassmorphism Card Style */
+.cyber-card {
+  background: rgba(11, 15, 24, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(16, 185, 129, 0.18);
+  border-radius: 0.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.1);
+}
+
+/* Smooth Slide Animations */
+.arrow-slide {
+  display: inline-block;
+  transition: transform 0.25s var(--ease-spring);
+}
+.group:hover .arrow-slide {
+  transform: translateX(4px);
+}
+
+.arrow-down-slide {
+  display: inline-block;
+  transition: transform 0.25s var(--ease-spring);
+}
+.group:hover .arrow-down-slide {
+  transform: translateY(3px);
+}
+
+/* Blur to Focus Scroll Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  filter: blur(6px);
+  transition: opacity 0.8s var(--ease-apple), transform 0.8s var(--ease-apple), filter 0.8s var(--ease-apple);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
+}
+
+/* Toast Notification Styles */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  background: #0b0f18;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #f8fafc;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn 0.35s var(--ease-apple) forwards;
+  max-width: 380px;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast.toast-out {
+  animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
