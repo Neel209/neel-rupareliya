@@ -357,11 +357,15 @@ def inject_seo_context():
 
 @app.route('/')
 def index():
-    return render_template('index.html', data=PORTFOLIO_DATA, current_year=datetime.now().year)
+    resp = make_response(render_template('index.html', data=PORTFOLIO_DATA, current_year=datetime.now().year))
+    resp.headers['Cache-Control'] = 'public, max-age=1800, stale-while-revalidate=86400'
+    return resp
 
 @app.route('/resume')
 def resume():
-    return render_template('resume.html', data=PORTFOLIO_DATA)
+    resp = make_response(render_template('resume.html', data=PORTFOLIO_DATA))
+    resp.headers['Cache-Control'] = 'public, max-age=3600, stale-while-revalidate=86400'
+    return resp
 
 @app.route('/api/resume')
 def download_resume():
@@ -984,6 +988,14 @@ def sitemap():
 @app.route('/manifest.json')
 def manifest():
     return send_from_directory('static', 'manifest.json', mimetype='application/manifest+json')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/apple-touch-icon.png')
+def apple_touch_icon():
+    return send_from_directory('static', 'apple-touch-icon.png', mimetype='image/png')
 
 
 @app.route('/api/terminal', methods=['POST'])

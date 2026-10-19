@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{{ data.name }} — Python Developer &amp; Automation Engineer | Portfolio{% endblock %}</title>
+  <title>{% block title %}{{ data.name }} — Python Developer &amp; Automation Engineer{% endblock %}</title>
   
-  <!-- Comprehensive SEO Meta Tags -->
+  <!-- Comprehensive SEO Meta Tags (Optimized to Strict Search Engine Limits) -->
   <link rel="canonical" href="https://neelrupareliya.in{{ request.path }}">
-  <meta name="description" content="Official portfolio of Neel Rupareliya — Python Developer &amp; Automation Engineer based in Gujarat, India. Specializing in high-performance web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), Pine Script TradingView integration, and fail-safe database architectures.">
+  <meta name="description" content="Official portfolio of Neel Rupareliya, Python Developer &amp; Automation Engineer. Specializing in Flask, FastAPI, Playwright bots &amp; fail-safe SaaS backends.">
   <meta name="keywords" content="Neel Rupareliya, Neel Rupareliya Python, Neel Rupareliya Developer, Neel Rupareliya Portfolio, Python Developer India, Python Automation Engineer, Backend Developer Gujarat, Flask, FastAPI, Playwright, Selenium, Pine Script, TradingView, MongoDB Atlas, Redis, Telegram Bot API, Remote Python Developer, SaaS Architecture">
   <meta name="author" content="Neel Rupareliya">
   <meta name="creator" content="Neel Rupareliya">
@@ -18,6 +18,9 @@
   <meta name="theme-color" content="#07090e">
   <meta name="rating" content="General">
   <meta name="revisit-after" content="3 days">
+  <meta http-equiv="content-language" content="en">
+  <link rel="alternate" hreflang="en" href="https://neelrupareliya.in{{ request.path }}">
+  <link rel="alternate" hreflang="x-default" href="https://neelrupareliya.in{{ request.path }}">
   {% if google_verification %}
   <meta name="google-site-verification" content="{{ google_verification }}">
   {% endif %}
@@ -29,26 +32,32 @@
   <meta name="ICBM" content="21.7645, 72.1519">
 
   <!-- Open Graph / Facebook / LinkedIn -->
-  <meta property="og:type" content="profile">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="Neel Rupareliya Portfolio">
   <meta property="og:title" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
-  <meta property="og:description" content="Portfolio of Neel Rupareliya — Python Developer &amp; Automation Engineer. Building self-running backends, automated pipelines &amp; browser bots.">
+  <meta property="og:description" content="Official portfolio of Neel Rupareliya, Python Developer &amp; Automation Engineer. Specializing in Flask, FastAPI, Playwright bots &amp; fail-safe SaaS backends.">
   <meta property="og:url" content="https://neelrupareliya.in{{ request.path }}">
   <meta property="og:locale" content="en_US">
   <meta property="og:image" content="https://neelrupareliya.in/static/images/automation.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:alt" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
-  <meta property="profile:first_name" content="Neel">
-  <meta property="profile:last_name" content="Rupareliya">
-  <meta property="profile:username" content="Neel209">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@Neel209">
+  <meta name="twitter:creator" content="@Neel209">
   <meta name="twitter:title" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
   <meta name="twitter:description" content="Specializing in Python backends, headless Playwright bots, and automated trading pipeline systems.">
   <meta name="twitter:image" content="https://neelrupareliya.in/static/images/automation.jpg">
   <meta name="twitter:image:alt" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
+
+  <!-- Real Physical Favicon & Touch Icons for Search Engine Verification -->
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
   <!-- Web App Manifest for Mobile & PWA Rankings -->
   <link rel="manifest" href="{{ url_for('manifest') }}">
@@ -220,13 +229,10 @@
   }
   </script>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2307090e' stroke='%2310b981' stroke-width='4'/><text x='50' y='65' font-size='44' font-family='monospace' font-weight='bold' fill='%2310b981' text-anchor='middle'>&gt;_</text></svg>">
-
-  <!-- Google Fonts: Syne & Fira Code & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External Modern Libraries with defer to prevent render-blocking -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -257,10 +263,10 @@
     }
   </script>
 
-  <!-- External Modern Libraries: Three.js, Lenis, Lucide -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Syne & Fira Code & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Custom Stylesheets -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -447,12 +453,12 @@
         <span>Download Resume PDF</span>
       </a>
 
-      <!-- Quick Social Row (GitHub, LinkedIn, Email — NO Telegram) -->
+      <!-- Quick Social Row (GitHub, LinkedIn, Email) with security rel tags -->
       <div class="flex items-center justify-center gap-4 pt-2 border-t border-slate-800">
-        <a href="{{ data.github }}" target="_blank" title="GitHub Profile" class="p-2 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors">
+        <a href="{{ data.github }}" target="_blank" rel="noopener noreferrer" title="GitHub Profile" class="p-2 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
         </a>
-        <a href="{{ data.linkedin }}" target="_blank" title="LinkedIn Profile" class="p-2 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors">
+        <a href="{{ data.linkedin }}" target="_blank" rel="noopener noreferrer" title="LinkedIn Profile" class="p-2 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
         </a>
         <a href="mailto:{{ data.email }}" title="Direct Email" class="p-2 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors">
@@ -487,8 +493,8 @@
 
       <!-- Professional Copyright & Navigation Links -->
       <div class="flex flex-wrap items-center justify-center gap-4 text-slate-400 text-[11px]">
-        <a href="{{ data.github }}" target="_blank" class="hover:text-emerald-400 transition-colors">GitHub</a>
-        <a href="{{ data.linkedin }}" target="_blank" class="hover:text-emerald-400 transition-colors">LinkedIn</a>
+        <a href="{{ data.github }}" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">GitHub</a>
+        <a href="{{ data.linkedin }}" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">LinkedIn</a>
         <a href="mailto:{{ data.email }}" class="hover:text-emerald-400 transition-colors">Email</a>
         <a href="{{ url_for('resume') }}" class="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">Resume</a>
         <a href="{{ url_for('admin') }}" class="hover:text-emerald-400 transition-colors text-slate-600 hover:text-slate-400">Admin</a>
