@@ -106,3 +106,54 @@
   color: #f8fafc;
   transform: translateY(-1px);
 }
+
+/* Mobile Command Runner Toolbar & Touch Pills */
+.terminal-mobile-toolbar {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.mobile-cmd-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.mobile-cmd-pill:active,
+.mobile-cmd-pill:hover {
+  background: rgba(16, 185, 129, 0.28);
+  border-color: #10b981;
+  color: #f8fafc;
+  transform: scale(0.96);
+}
+
+/* Hide scrollbars for pill horizontal scrollers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 640px) {
+  .terminal-body {
+    min-height: 260px;
+    max-height: 380px;
+    padding: 0.85rem;
+    font-size: 0.78rem;
+  }
+  #terminalInput {
+    font-size: 14px; /* Prevents awkward virtual keyboard zoom */
+  }
+}

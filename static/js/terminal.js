@@ -89,7 +89,7 @@
     }
   });
 
-  // Clickable Chips
+  // Clickable Chips (Desktop Bar)
   cmdChips.forEach(chip => {
     chip.addEventListener('click', () => {
       const cmd = chip.dataset.cmd || chip.textContent.trim();
@@ -98,6 +98,55 @@
       terminalInput.focus();
     });
   });
+
+  // Mobile Action Pills (Touch-Friendly direct execution)
+  const mobilePills = document.querySelectorAll('.mobile-cmd-pill');
+  mobilePills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cmd = pill.dataset.cmd || pill.textContent.trim();
+      terminalInput.value = cmd;
+      executeCommand(cmd);
+    });
+  });
+
+  // Mobile Select Dropdown & Run Button
+  const mobileSelect = document.getElementById('terminalMobileSelect');
+  const mobileRunSelectBtn = document.getElementById('terminalMobileRunSelectBtn');
+  
+  if (mobileRunSelectBtn && mobileSelect) {
+    mobileRunSelectBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedCmd = mobileSelect.value;
+      if (selectedCmd) {
+        terminalInput.value = selectedCmd;
+        executeCommand(selectedCmd);
+      }
+    });
+
+    mobileSelect.addEventListener('change', () => {
+      const selectedCmd = mobileSelect.value;
+      if (selectedCmd) {
+        terminalInput.value = selectedCmd;
+        executeCommand(selectedCmd);
+      }
+    });
+  }
+
+  // Terminal Line Dedicated Submit Button
+  const terminalSubmitBtn = document.getElementById('terminalSubmitBtn');
+  if (terminalSubmitBtn) {
+    terminalSubmitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cmd = terminalInput.value.trim();
+      if (cmd) {
+        executeCommand(cmd);
+      } else {
+        // If empty, run help
+        executeCommand('help');
+      }
+    });
+  }
 
   // Listen for external focus request
   window.addEventListener('focus-terminal', () => {

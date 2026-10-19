@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Backward compatibility
-  window.copyEmail = function (email = 'neelrupareliya59@gmail.com') {
+  window.copyEmail = function (email = 'neelrupareliya09@gmail.com') {
     copyToClipboard(email);
   };
 

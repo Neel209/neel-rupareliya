@@ -311,76 +311,6 @@
       </div>
     </div>
 
-    <!-- Live Interactive Simulator Suite (Tabs) -->
-    <div class="mt-12 rounded-xl border border-slate-800 bg-[#070b14] p-6 sm:p-8">
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6">
-        <div>
-          <h3 class="font-display font-bold text-lg text-slate-100">Interactive Systems Simulator</h3>
-          <p class="font-mono text-xs text-slate-400">Execute live circuit breaker tests and crawler automation workers</p>
-        </div>
-
-        <!-- Tab Switcher -->
-        <div class="flex items-center gap-2 font-mono text-xs">
-          <button onclick="switchArchTab('failover')" data-tab="failover" class="arch-tab-btn px-4 py-2 rounded-md bg-emerald-500 text-[#07090e] font-semibold transition-colors">
-            DB Failover Engine
-          </button>
-          <button onclick="switchArchTab('bot')" data-tab="bot" class="arch-tab-btn px-4 py-2 rounded-md bg-slate-900 text-slate-400 font-semibold transition-colors hover:text-white">
-            Playwright Crawler
-          </button>
-        </div>
-      </div>
-
-      <!-- Tab 1: DB Failover Simulator -->
-      <div data-tab="failover" class="arch-tab-content space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-            <div class="flex items-center justify-between mb-2">
-              <span class="font-mono text-xs text-slate-300 font-semibold">MongoDB Atlas (Primary Cluster)</span>
-              <span id="simMongoStatus" class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            </div>
-            <div class="font-mono text-[11px] text-slate-400">Global replica set &bull; Auto-failover threshold: 500ms</div>
-          </div>
-          <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-            <div class="flex items-center justify-between mb-2">
-              <span class="font-mono text-xs text-slate-300 font-semibold">Local SQLite Standby (WAL Engine)</span>
-              <span id="simSqliteStatus" class="w-2 h-2 rounded-full bg-slate-600"></span>
-            </div>
-            <div class="font-mono text-[11px] text-slate-400">Zero-downtime offline writes buffer &bull; Sync on recovery</div>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-2">
-          <button id="failoverSimBtn" onclick="runFailoverSim()" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono text-xs font-semibold transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
-            <span>Simulate Network Outage &amp; Failover</span>
-          </button>
-          <span id="simCircuitBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">CIRCUIT CLOSED (HEALTHY)</span>
-        </div>
-
-        <div id="failoverSimLog" class="p-4 rounded-lg bg-[#05070c] border border-slate-800 font-mono text-xs text-slate-400 min-h-[90px] leading-relaxed">
-          &gt; Ready for circuit simulation. Click button above to execute stress test.
-        </div>
-      </div>
-
-      <!-- Tab 2: Playwright Crawler Simulator -->
-      <div data-tab="bot" class="arch-tab-content space-y-4 hidden">
-        <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div class="font-mono text-xs text-slate-200 font-semibold">Playwright Stealth Chromium Daemon</div>
-            <div class="font-mono text-[11px] text-slate-400">Automated NSE Index Chart Capture + Telegram Broadcaster</div>
-          </div>
-          <button id="botSimBtn" onclick="runBotSim()" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-emerald-500 text-[#07090e] font-mono text-xs font-semibold transition-colors shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Trigger Scheduled Run</span>
-          </button>
-        </div>
-
-        <div id="botSimLog" class="p-4 rounded-lg bg-[#05070c] border border-slate-800 font-mono text-xs text-slate-400 min-h-[90px] leading-relaxed">
-          &gt; Worker idle. Awaiting next scheduled cron trigger.
-        </div>
-      </div>
-
-    </div>
   </section>
 
   <!-- =========================================================================
@@ -399,49 +329,58 @@
       </p>
     </div>
 
-    <!-- Bento Grid (7-col / 5-col / 5-col / 7-col) -->
-    <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Sequenced Balanced Projects Grid (2-Column Harmonious Layout) -->
+    <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
       {% for project in data.projects %}
-      <div class="{{ project.span }} tilt-card spotlight-card cyber-card rounded-xl p-6 sm:p-8 flex flex-col justify-between" data-testid="{{ project.testid }}">
-        <div class="tilt-inner space-y-5">
+      <div class="tilt-card spotlight-card cyber-card rounded-xl p-6 sm:p-8 flex flex-col justify-between h-full group" data-testid="{{ project.testid }}">
+        <div class="tilt-inner flex flex-col flex-1">
           
-          <!-- Top Row: Category Tag & Metric Badge -->
-          <div class="flex items-center justify-between gap-3">
-            <span class="font-mono text-[11px] uppercase tracking-wider text-emerald-400 border border-emerald-500/30 rounded-md px-3 py-1 bg-emerald-500/5">
-              {{ project.tag }}
-            </span>
-            <span class="font-mono text-[11px] font-semibold text-cyan-300 border border-cyan-500/30 rounded-full px-3 py-1 bg-cyan-500/5">
-              {{ project.metric }}
+          <!-- Top Row: Sequence Badge, Category Tag & Metric Badge -->
+          <div class="flex flex-wrap items-center justify-between gap-2.5 mb-5 pb-4 border-b border-emerald-500/10">
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="font-mono text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded px-2.5 py-1 tracking-wider shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+                #0{{ loop.index }}
+              </span>
+              <span class="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-300 border border-slate-700/60 rounded px-2.5 py-1 bg-slate-800/50">
+                {{ project.tag }}
+              </span>
+            </div>
+            <span class="font-mono text-[10px] sm:text-[11px] font-semibold text-cyan-300 border border-cyan-500/30 rounded-full px-2.5 sm:px-3 py-1 bg-cyan-500/5 flex items-center gap-1.5 max-w-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
+              <span class="truncate">{{ project.metric }}</span>
             </span>
           </div>
 
-          <!-- Project Title & Subtitle -->
-          <div>
-            <h3 class="font-display font-bold text-2xl sm:text-3xl text-slate-50 group-hover:text-emerald-300 transition-colors">
+          <!-- Project Title & Subtitle (Balanced Height Container) -->
+          <div class="min-h-[74px] sm:min-h-[80px] flex flex-col justify-start mb-3">
+            <h3 class="font-display font-bold text-2xl sm:text-3xl text-slate-50 group-hover:text-emerald-300 transition-colors leading-tight">
               {{ project.title }}
             </h3>
-            <p class="font-mono text-xs text-slate-400 mt-1 font-semibold">
+            <p class="font-mono text-xs text-emerald-400/90 mt-1.5 font-semibold">
               {{ project.tagline }}
             </p>
           </div>
 
           <!-- Project Description -->
-          <p class="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <p class="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed min-h-[56px] mb-4">
             {{ project.desc }}
           </p>
 
-          <!-- Highlights Bullets -->
-          <ul class="space-y-1.5 font-mono text-xs text-slate-400">
-            {% for hl in project.highlights[:3] %}
-            <li class="flex items-start gap-2">
-              <span class="text-emerald-500 shrink-0 mt-0.5">&#9656;</span>
-              <span>{{ hl }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+          <!-- Core Architecture Highlights -->
+          <div class="mb-5 flex-1">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-2">// KEY ARCHITECTURE & HIGHLIGHTS</div>
+            <ul class="space-y-1.5 font-mono text-xs text-slate-400">
+              {% for hl in project.highlights[:3] %}
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-500 shrink-0 mt-0.5">&#9656;</span>
+                <span class="leading-relaxed">{{ hl }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
 
           <!-- Tech Stack Tags -->
-          <div class="flex flex-wrap gap-1.5 pt-2">
+          <div class="flex flex-wrap gap-1.5 pt-1 mb-6">
             {% for tech in project.stack %}
             <span class="font-mono text-[10px] text-emerald-300/90 border border-emerald-500/20 rounded px-2.5 py-1 bg-emerald-500/5">
               {{ tech }}
@@ -451,7 +390,7 @@
         </div>
 
         <!-- Bottom Action Row: Advanced User-Friendly Destination Console -->
-        <div class="mt-8 pt-5 border-t border-emerald-500/15 flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
+        <div class="mt-auto pt-5 border-t border-emerald-500/15 flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
           <!-- Developer Role Badge -->
           <div class="flex items-center gap-2">
             <span class="text-[10px] uppercase tracking-wider text-slate-500 font-mono">// ROLE</span>
@@ -632,7 +571,7 @@
 
         <div class="mt-6 pt-4 border-t border-emerald-500/15 flex items-center justify-between font-mono text-xs text-slate-500">
           <span>Duration: {{ edu.period }}</span>
-          <span class="text-emerald-400">&#10003; Verified Degree</span>
+          <span class="text-emerald-400">&#10003; Academic Credential</span>
         </div>
       </div>
       {% endfor %}
@@ -678,7 +617,56 @@
           <span class="terminal-dot dot-green"></span>
         </div>
         <div class="font-mono text-xs text-slate-400">neel@automation-core:~ (zsh)</div>
-        <div class="font-mono text-[11px] text-emerald-400 border border-emerald-500/30 rounded px-2 py-0.5">Online</div>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-[11px] text-emerald-400 border border-emerald-500/30 rounded px-2 py-0.5">Online</span>
+        </div>
+      </div>
+
+      <!-- Advanced Mobile Command Runner (Dedicated Touch Mode for Mobile View) -->
+      <div id="terminalMobileConsole" class="terminal-mobile-toolbar sm:hidden bg-[#0c121e] border-b border-emerald-500/20 p-3">
+        <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400 font-semibold mb-2">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            ADVANCED COMMAND RUNNER
+          </span>
+          <span class="text-[10px] text-slate-400">1-Tap Direct Execution</span>
+        </div>
+
+        <!-- Direct 1-Tap Select & Execute Dropdown -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <select id="terminalMobileSelect" aria-label="Select command to execute" class="w-full bg-[#05070c] border border-emerald-500/35 rounded-lg px-3 py-2 font-mono text-xs text-slate-100 outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-500/30">
+              <option value="" disabled selected>⚡ Pick a command to execute...</option>
+              <option value="about">⚡ about &mdash; Bio &amp; Role</option>
+              <option value="skills">⚡ skills &mdash; Full Technical Stack</option>
+              <option value="projects">⚡ projects &mdash; Production Platforms</option>
+              <option value="architecture">⚡ architecture &mdash; Workflow Pipelines</option>
+              <option value="experience">⚡ experience &mdash; Work &amp; Internships</option>
+              <option value="education">⚡ education &mdash; MCA &amp; BCA Degrees</option>
+              <option value="contact">⚡ contact &mdash; Direct Channels</option>
+              <option value="sudo hire-neel">🚀 sudo hire-neel &mdash; Recruiter Onboarding</option>
+              <option value="run-bot">🤖 run-bot &mdash; Playwright Bot Test</option>
+              <option value="failover-test">🛡️ failover-test &mdash; DB Failover Test</option>
+              <option value="clear">🧹 clear &mdash; Wipe Screen</option>
+            </select>
+          </div>
+          <button type="button" id="terminalMobileRunSelectBtn" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-[#07090e] font-mono text-xs font-bold transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0 flex items-center gap-1">
+            <span>RUN</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+
+        <!-- Fast Swipe Quick Action Pills -->
+        <div class="mt-2.5 pt-2 border-t border-emerald-500/10 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          <span class="text-[10px] font-mono text-slate-500 shrink-0 font-semibold">TAP TO RUN:</span>
+          <button type="button" class="mobile-cmd-pill" data-cmd="about">about</button>
+          <button type="button" class="mobile-cmd-pill" data-cmd="skills">skills</button>
+          <button type="button" class="mobile-cmd-pill" data-cmd="projects">projects</button>
+          <button type="button" class="mobile-cmd-pill" data-cmd="architecture">architecture</button>
+          <button type="button" class="mobile-cmd-pill" data-cmd="sudo hire-neel">hire-neel</button>
+          <button type="button" class="mobile-cmd-pill" data-cmd="contact">contact</button>
+          <button type="button" class="mobile-cmd-pill" data-cmd="clear">clear</button>
+        </div>
       </div>
 
       <!-- Scanline Overlay -->
@@ -690,17 +678,21 @@
           NEEL.ENV interactive shell — v2.4.1
         </div>
         <div class="font-mono text-xs text-slate-400 mb-4">
-          Type <span class="text-emerald-400 font-semibold">'help'</span> to list available commands or click the chips above.
+          Type <span class="text-emerald-400 font-semibold">'help'</span> to list available commands. On mobile, use the 1-Tap Command Runner above to run without keyboard confusion.
         </div>
 
         <!-- Rendered History -->
         <div id="terminalOutput"></div>
 
-        <!-- Current Command Input Line -->
-        <div class="flex items-center gap-2 font-mono text-xs mt-3">
-          <span class="text-emerald-400 font-semibold shrink-0">neel@automation-core:~$</span>
-          <input type="text" id="terminalInput" class="w-full bg-transparent text-slate-100 outline-none border-none font-mono text-xs placeholder:text-slate-600" placeholder="Type a command (e.g. skills, projects, run-bot)..." autocomplete="off" spellcheck="false">
-          <span class="terminal-cursor"></span>
+        <!-- Current Command Input Line with Mobile Run Button -->
+        <div class="flex items-center gap-2 font-mono text-xs mt-3 pt-2.5 border-t border-slate-800/80">
+          <span class="text-emerald-400 font-semibold shrink-0 text-xs">neel@automation-core:~$</span>
+          <input type="text" id="terminalInput" class="flex-1 bg-transparent text-slate-100 outline-none border-none font-mono text-xs sm:text-sm placeholder:text-slate-600" placeholder="Type a command or use runner above..." autocomplete="off" spellcheck="false">
+          <span class="terminal-cursor hidden sm:inline-block"></span>
+          <button type="button" id="terminalSubmitBtn" class="px-3.5 py-1.5 rounded-md bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-[11px] font-mono font-bold transition-all shrink-0 flex items-center gap-1" title="Execute command">
+            <span>RUN</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
         </div>
       </div>
     </div>

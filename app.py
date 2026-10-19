@@ -1,12 +1,26 @@
 import os
 import io
 import time
+import json
+import smtplib
+import ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify, send_file, send_from_directory
 from fpdf import FPDF
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'neel-portfolio-super-secret-key-2026')
+
+# Persistent inquiries log file
+INQUIRIES_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'inquiries.json')
 
 # Profile Data Model based on Resume & Design Guidelines
 PORTFOLIO_DATA = {
@@ -14,11 +28,11 @@ PORTFOLIO_DATA = {
     "role": "Python Developer × Automation Engineer",
     "sub_role": "Backend & Automation Engineer",
     "location": "Gujarat, India (Remote Worldwide)",
-    "email": "neelrupareliya59@gmail.com",
+    "email": "neelrupareliya09@gmail.com",
     "secondary_email": "neelrupareliya09@gmail.com",
     "phone": "+91 84697 90287",
-    "secondary_phone": "+91 8469790287",
-    "phone_display": "+91 8469790287",
+    "secondary_phone": "+91 84697 90287",
+    "phone_display": "+91 84697 90287",
     "linkedin": "https://www.linkedin.com/in/neelrupareliya",
     "github": "https://github.com/Neel209",
     "telegram": "https://t.me/neelrupareliya",
@@ -70,18 +84,19 @@ PORTFOLIO_DATA = {
         {
             "id": "trade-masters",
             "testid": "project-card-trade-masters",
+            "seq": "01",
             "title": "Trade Masters",
             "tag": "SaaS Platform",
             "badge": "Full-Stack FinTech",
             "tagline": "Algorithmic Trading & FinTech Subscription Platform",
-            "metric": "Automated Indicator Provisioning",
+            "metric": "Auto Indicator Provisioning",
             "role": "Solo Developer",
             "live_url": "https://trademasters.co.in",
             "display_url": "trademasters.co.in",
             "github_url": None,
             "image": "/static/images/trademasters.jpg",
             "bg_cyber": "https://images.unsplash.com/photo-1646444254678-b937f153b221?crop=entropy&cs=srgb&fm=jpg&q=85",
-            "span": "lg:col-span-7",
+            "span": "col-span-1",
             "stack": ["Flask", "MongoDB Atlas", "Webhooks", "Pine Script", "Redis", "WebSockets"],
             "desc": "Algorithmic trading & subscription platform. Automated license provisioning, webhook-driven TradingView access control, dynamic GST billing, and zero-downtime database failover architecture.",
             "highlights": [
@@ -95,6 +110,7 @@ PORTFOLIO_DATA = {
         {
             "id": "chart-automation",
             "testid": "project-card-market-chart",
+            "seq": "02",
             "title": "Market Chart Automation & Telegram Alerts",
             "tag": "Automation Bot",
             "badge": "Automation Bot",
@@ -106,7 +122,7 @@ PORTFOLIO_DATA = {
             "display_url": "github.com/Neel209/Telegram_automation",
             "image": "/static/images/automation.jpg",
             "bg_cyber": "https://images.unsplash.com/photo-1648614593495-e0955bf287e5?crop=entropy&cs=srgb&fm=jpg&q=85",
-            "span": "lg:col-span-5",
+            "span": "col-span-1",
             "stack": ["Python", "Playwright", "Selenium", "Telegram API", "GitHub Actions", "Cron"],
             "desc": "Headless chart-capture pipeline that captures multi-asset technical charts (NSE Indices, Commodities, Forex) and broadcasts indicator snapshots directly to Telegram channels 24/7.",
             "highlights": [
@@ -119,6 +135,7 @@ PORTFOLIO_DATA = {
         {
             "id": "proofai",
             "testid": "project-card-proof-ai",
+            "seq": "03",
             "title": "ProofAI",
             "tag": "AI Utility",
             "badge": "AI Web App",
@@ -130,7 +147,7 @@ PORTFOLIO_DATA = {
             "github_url": None,
             "image": "/static/images/proofai.jpg",
             "bg_cyber": "https://images.unsplash.com/photo-1645788437811-2ff9e2104423?crop=entropy&cs=srgb&fm=jpg&q=85",
-            "span": "lg:col-span-5",
+            "span": "col-span-1",
             "stack": ["FastAPI", "Python", "OCR", "MySQL", "LLM APIs", "PostgreSQL"],
             "desc": "Document classification and verification pipeline that parses uploads, extracts fields, and flags anomalies automatically using language model evaluations.",
             "highlights": [
@@ -142,6 +159,7 @@ PORTFOLIO_DATA = {
         {
             "id": "kahaan-jewels",
             "testid": "project-card-kahanan-jewels",
+            "seq": "04",
             "title": "Kahanan Jewels",
             "tag": "E-Commerce",
             "badge": "Backend & Optimization",
@@ -153,7 +171,7 @@ PORTFOLIO_DATA = {
             "github_url": None,
             "image": None,
             "bg_cyber": "https://images.unsplash.com/photo-1646444254678-b937f153b221?crop=entropy&cs=srgb&fm=jpg&q=85",
-            "span": "lg:col-span-7",
+            "span": "col-span-1",
             "stack": ["Python", "Flask", "MongoDB", "MySQL", "WinSCP Scripting", "Cron Jobs"],
             "desc": "Full-stack jewellery storefront with automated inventory sync, order lifecycle emails, and a session caching architecture that reduced database queries by 40%.",
             "highlights": [
@@ -334,6 +352,130 @@ def api_status():
         }
     })
 
+def save_inquiry(msg_obj):
+    """Persist inquiry to disk so no contact inquiries are ever lost."""
+    try:
+        data = []
+        if os.path.exists(INQUIRIES_FILE):
+            with open(INQUIRIES_FILE, 'r', encoding='utf-8') as f:
+                try:
+                    data = json.load(f)
+                except Exception:
+                    data = []
+        data.append(msg_obj)
+        with open(INQUIRIES_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print(f"[WARN] Failed to write inquiry to file: {e}")
+
+def send_inquiry_email(name, sender_email, subject, message_body, client_ip=""):
+    """
+    Sends an inquiry email to neelrupareliya09@gmail.com using SMTP (e.g. Gmail SMTP).
+    Configurable via environment variables:
+    - MAIL_SERVER / SMTP_SERVER (default: smtp.gmail.com)
+    - MAIL_PORT / SMTP_PORT (default: 587)
+    - MAIL_USERNAME / SMTP_USER (default: neelrupareliya09@gmail.com)
+    - MAIL_PASSWORD / SMTP_PASSWORD / GMAIL_APP_PASSWORD
+    - MAIL_RECIPIENT / CONTACT_EMAIL (default: neelrupareliya09@gmail.com)
+    """
+    recipient = os.environ.get('MAIL_RECIPIENT', os.environ.get('CONTACT_EMAIL', 'neelrupareliya09@gmail.com')).strip()
+    smtp_server = os.environ.get('MAIL_SERVER', os.environ.get('SMTP_SERVER', 'smtp.gmail.com')).strip()
+    smtp_port = int(os.environ.get('MAIL_PORT', os.environ.get('SMTP_PORT', 587)))
+    smtp_user = os.environ.get('MAIL_USERNAME', os.environ.get('SMTP_USER', recipient)).strip()
+    smtp_pass = os.environ.get('MAIL_PASSWORD', os.environ.get('SMTP_PASSWORD', os.environ.get('GMAIL_APP_PASSWORD', ''))).strip()
+
+    if not smtp_pass:
+        print(f"[INFO] SMTP password not set in environment. Set MAIL_PASSWORD / GMAIL_APP_PASSWORD to dispatch live emails. Inquiry recorded for {recipient}.")
+        return False, "SMTP password not configured on server (inquiry safely saved to database/disk)"
+
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"⚡ Portfolio Inquiry: {subject} (from {name})"
+        msg["From"] = f"Neel Portfolio <{smtp_user}>"
+        msg["To"] = recipient
+        msg["Reply-To"] = sender_email
+
+        timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+        text_content = f"""
+New Portfolio Inquiry Received:
+
+From: {name} ({sender_email})
+Subject: {subject}
+Received: {timestamp}
+Client IP: {client_ip}
+
+Message:
+--------------------------------------------------
+{message_body}
+--------------------------------------------------
+
+Direct reply to this email will respond to {sender_email}.
+"""
+
+        html_content = f"""
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #07090e; color: #f1f5f9; padding: 24px; margin: 0; }}
+    .card {{ max-width: 600px; margin: 0 auto; background: #0c121e; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }}
+    .badge {{ display: inline-block; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }}
+    h2 {{ color: #ffffff; margin-top: 14px; margin-bottom: 20px; font-size: 22px; }}
+    .meta-table {{ width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }}
+    .meta-table td {{ padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }}
+    .meta-table .label {{ color: #94a3b8; font-weight: 600; width: 120px; }}
+    .meta-table .val {{ color: #f8fafc; font-family: monospace; }}
+    .message-box {{ background: #05070c; border: 1px solid rgba(16, 185, 129, 0.2); border-left: 3px solid #10b981; border-radius: 6px; padding: 20px; margin-top: 16px; font-size: 14px; line-height: 1.6; color: #e2e8f0; white-space: pre-wrap; word-break: break-word; }}
+    .btn {{ display: inline-block; background: #10b981; color: #07090e; font-weight: 700; text-decoration: none; padding: 12px 24px; border-radius: 6px; margin-top: 24px; font-size: 13px; }}
+    .footer {{ margin-top: 28px; font-size: 11px; color: #64748b; text-align: center; font-family: monospace; }}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">⚡ Direct Transmission</span>
+    <h2>New Inquiry for Neel Rupareliya</h2>
+    <table class="meta-table">
+      <tr><td class="label">From</td><td class="val">{name}</td></tr>
+      <tr><td class="label">Email</td><td class="val"><a href="mailto:{sender_email}" style="color: #34d399;">{sender_email}</a></td></tr>
+      <tr><td class="label">Subject</td><td class="val">{subject}</td></tr>
+      <tr><td class="label">Timestamp</td><td class="val">{timestamp}</td></tr>
+      {f'<tr><td class="label">Client IP</td><td class="val">{client_ip}</td></tr>' if client_ip else ''}
+    </table>
+    <div style="font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Message Content:</div>
+    <div class="message-box">{message_body}</div>
+    <div style="text-align: center;">
+      <a href="mailto:{sender_email}?subject=Re: {subject}" class="btn">Reply to {name} &rarr;</a>
+    </div>
+    <div class="footer">
+      Dispatched via Neel Rupareliya Developer Portfolio System &bull; Destination: {recipient}
+    </div>
+  </div>
+</body>
+</html>
+"""
+        msg.attach(MIMEText(text_content, "plain"))
+        msg.attach(MIMEText(html_content, "html"))
+
+        context = ssl.create_default_context()
+        if smtp_port == 465:
+            with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context, timeout=12) as server:
+                server.login(smtp_user, smtp_pass)
+                server.sendmail(smtp_user, [recipient], msg.as_string())
+        else:
+            with smtplib.SMTP(smtp_server, smtp_port, timeout=12) as server:
+                server.ehlo()
+                server.starttls(context=context)
+                server.ehlo()
+                server.login(smtp_user, smtp_pass)
+                server.sendmail(smtp_user, [recipient], msg.as_string())
+
+        return True, "Email dispatched to neelrupareliya09@gmail.com"
+    except Exception as e:
+        print(f"[ERROR] SMTP send failed: {e}")
+        return False, str(e)
+
 @app.route('/api/contact', methods=['POST'])
 def api_contact():
     payload = request.get_json(silent=True) or request.form.to_dict()
@@ -348,18 +490,36 @@ def api_contact():
             "message": "Please provide your name, a valid email, and your message."
         }), 400
 
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '')
+    if client_ip and ',' in client_ip:
+        client_ip = client_ip.split(',')[0].strip()
+
+    # Dispatch email to neelrupareliya09@gmail.com
+    email_sent, email_log = send_inquiry_email(
+        name=name,
+        sender_email=email,
+        subject=subject,
+        message_body=message,
+        client_ip=client_ip
+    )
+
     msg_obj = {
         "name": name,
         "email": email,
         "subject": subject,
         "message": message,
-        "received_at": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+        "received_at": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "client_ip": client_ip,
+        "destination": "neelrupareliya09@gmail.com",
+        "email_dispatched": email_sent,
+        "dispatch_status": email_log
     }
     CONTACT_MESSAGES.append(msg_obj)
+    save_inquiry(msg_obj)
 
     return jsonify({
         "status": "success",
-        "message": f"Message transmitted successfully! Expect a reply within 24h at {email}.",
+        "message": f"Message transmitted successfully to neelrupareliya09@gmail.com! Expect a reply within 24h at {email}.",
         "data": msg_obj
     })
 
@@ -473,7 +633,7 @@ def api_terminal():
   <div class="text-amber-400">[sudo] password for recruiter: ********</div>
   <div class="text-emerald-400 font-bold">[ACCESS GRANTED] Initiating onboarding sequence...</div>
   <div class="text-slate-300">&rarr; Role matched: Python Developer & Automation Engineer.</div>
-  <div class="text-slate-300">&rarr; Direct reachout: neelrupareliya59@gmail.com / +91 81419 69437.</div>
+  <div class="text-slate-300">&rarr; Direct reachout: neelrupareliya09@gmail.com / +91 84697 90287.</div>
   <div class="text-cyan-400">&rarr; Opening contact channel below. Scroll down and transmit your brief!</div>
 </div>"""
     elif cmd in ['run-bot', 'bot', 'playwright']:
