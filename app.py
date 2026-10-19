@@ -428,19 +428,43 @@ def detect_device(ua_string):
         return 'Mobile'
     return 'Desktop'
 
+_ANALYTICS_CACHE = None
+_ANALYTICS_DIRTY_COUNT = 0
+
+def get_cached_analytics():
+    global _ANALYTICS_CACHE
+    if _ANALYTICS_CACHE is None:
+        _ANALYTICS_CACHE = load_analytics()
+    return _ANALYTICS_CACHE
+
+def flush_analytics_if_needed(force=False):
+    global _ANALYTICS_DIRTY_COUNT, _ANALYTICS_CACHE
+    if _ANALYTICS_CACHE is None:
+        return
+    _ANALYTICS_DIRTY_COUNT += 1
+    if force or _ANALYTICS_DIRTY_COUNT >= 5:
+        save_analytics(_ANALYTICS_CACHE)
+        _ANALYTICS_DIRTY_COUNT = 0
+
 def track_visitor_hit(path):
     # Only track public content pages (ignore admin, static, api, robots, sitemap)
     if (path.startswith('/static') or 
         path.startswith('/api/admin') or 
         path.startswith('/admin') or 
-        path in ['/favicon.ico', '/robots.txt', '/sitemap.xml']):
+        path in ['/favicon.ico', '/robots.txt', '/sitemap.xml', '/apple-touch-icon.png']):
+        return None
+
+    ua = request.headers.get('User-Agent', '')
+    ua_lower = ua.lower()
+
+    # Fast bypass for search engine & audit crawlers to ensure ultra-fast TTFB
+    if any(b in ua_lower for b in ['seobility', 'bot', 'spider', 'crawler', 'crawl', 'lighthouse', 'pagespeed', 'google', 'bing', 'slurp', 'yandex', 'baidu', 'curl', 'wget', 'python']):
         return None
 
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1')
     if ',' in client_ip:
         client_ip = client_ip.split(',')[0].strip()
 
-    ua = request.headers.get('User-Agent', '')
     device = detect_device(ua)
 
     visitor_id = request.cookies.get('_nid')
@@ -453,7 +477,7 @@ def track_visitor_hit(path):
     today = datetime.utcnow().strftime("%Y-%m-%d")
     now_iso = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    data = load_analytics()
+    data = get_cached_analytics()
     visitors = data.setdefault("visitors", {})
     daily_unique = data.setdefault("daily_unique", {})
     pages = data.setdefault("pages", {})
@@ -478,7 +502,7 @@ def track_visitor_hit(path):
             daily_unique[today] = daily_unique.get(today, 0) + 1
 
     pages[path] = pages.get(path, 0) + 1
-    save_analytics(data)
+    flush_analytics_if_needed()
 
     return visitor_id if new_cookie else None
 

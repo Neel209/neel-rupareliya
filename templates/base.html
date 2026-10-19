@@ -301,27 +301,27 @@
 
       <!-- Desktop Nav Items -->
       <div class="hidden md:flex items-center gap-1 font-mono text-xs">
-        <button onclick="scrollToSection('#top')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        <a href="#top" onclick="scrollToSection('#top'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>hero
-        </button>
-        <button onclick="scrollToSection('#architecture')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        </a>
+        <a href="#architecture" onclick="scrollToSection('#architecture'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>architecture
-        </button>
-        <button onclick="scrollToSection('#projects')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        </a>
+        <a href="#projects" onclick="scrollToSection('#projects'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>projects
-        </button>
-        <button onclick="scrollToSection('#skills')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        </a>
+        <a href="#skills" onclick="scrollToSection('#skills'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>skills
-        </button>
-        <button onclick="scrollToSection('#terminal')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        </a>
+        <a href="#terminal" onclick="scrollToSection('#terminal'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>terminal
-        </button>
-        <button onclick="scrollToSection('#faqs')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        </a>
+        <a href="#faqs" onclick="scrollToSection('#faqs'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>faq
-        </button>
-        <button onclick="scrollToSection('#contact')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+        </a>
+        <a href="#contact" onclick="scrollToSection('#contact'); return false;" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>contact
-        </button>
+        </a>
 
         <!-- Direct Resume Page Link (Opens Separate Dedicated Page) -->
         <a href="{{ url_for('resume') }}" class="ml-3 inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[#07090e] bg-emerald-500 hover:bg-emerald-400 px-4 py-2 rounded-md transition-colors duration-200 shadow-[0_0_15px_rgba(16,185,129,0.25)]">
@@ -378,61 +378,61 @@
         // Direct Navigation
       </div>
 
-      <button onclick="scrollToSection('#top');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#top" onclick="scrollToSection('#top'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[01]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Hero Overview</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
 
-      <button onclick="scrollToSection('#architecture');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#architecture" onclick="scrollToSection('#architecture'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[02]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">System Architecture</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
 
-      <button onclick="scrollToSection('#projects');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#projects" onclick="scrollToSection('#projects'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[03]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Featured Projects</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
 
-      <button onclick="scrollToSection('#skills');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#skills" onclick="scrollToSection('#skills'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[04]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Technical Skills</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
 
-      <button onclick="scrollToSection('#terminal');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#terminal" onclick="scrollToSection('#terminal'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[05]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Developer Terminal</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
 
-      <button onclick="scrollToSection('#faqs');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#faqs" onclick="scrollToSection('#faqs'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[06]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Knowledge &amp; FAQ</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
 
-      <button onclick="scrollToSection('#contact');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <a href="#contact" onclick="scrollToSection('#contact'); return false;" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[07]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Direct Contact</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
-      </button>
+      </a>
     </div>
 
     <!-- Quick Action Launchpad in Drawer -->
@@ -481,25 +481,32 @@
   <footer class="border-t border-emerald-500/15 bg-[#05070b] relative z-10 font-mono text-xs">
     <div class="px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
       
-      <!-- Brand & Info -->
-      <button onclick="scrollToSection('#top')" class="flex items-center gap-2.5 text-left">
-        <span class="w-7 h-7 rounded-md border border-emerald-500/60 bg-emerald-500/10 flex items-center justify-center font-mono font-bold text-emerald-400 text-xs shrink-0">
+      <!-- Brand & Info Anchor Link -->
+      <a href="#top" onclick="scrollToSection('#top'); return false;" class="flex items-center gap-2.5 text-left group">
+        <span class="w-7 h-7 rounded-md border border-emerald-500/60 bg-emerald-500/10 flex items-center justify-center font-mono font-bold text-emerald-400 text-xs shrink-0 group-hover:bg-emerald-500/20 transition-colors">
           &gt;_
         </span>
-        <span class="text-slate-300 font-semibold">
+        <span class="text-slate-300 font-semibold group-hover:text-emerald-300 transition-colors">
           Neel Rupareliya &bull; <span class="text-slate-400 font-normal">Python Developer &bull; Gujarat, India</span>
         </span>
-      </button>
+      </a>
 
-      <!-- Professional Copyright & Navigation Links -->
-      <div class="flex flex-wrap items-center justify-center gap-4 text-slate-400 text-[11px]">
+      <!-- Professional Copyright & In-Page Navigation Links (Boosts Internal Link Count) -->
+      <div class="flex flex-wrap items-center justify-center gap-3 text-slate-400 text-[11px]">
+        <a href="#top" class="hover:text-emerald-400 transition-colors">Home</a>
+        <a href="#architecture" class="hover:text-emerald-400 transition-colors">Architecture</a>
+        <a href="#projects" class="hover:text-emerald-400 transition-colors">Projects</a>
+        <a href="#skills" class="hover:text-emerald-400 transition-colors">Skills</a>
+        <a href="#terminal" class="hover:text-emerald-400 transition-colors">Terminal</a>
+        <a href="#faqs" class="hover:text-emerald-400 transition-colors">FAQs</a>
+        <a href="#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
+        <span class="text-slate-700 hidden sm:inline">|</span>
+        <a href="{{ url_for('resume') }}" class="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">Resume</a>
+        <a href="{{ url_for('download_resume') }}" class="hover:text-emerald-400 transition-colors">Download PDF</a>
         <a href="{{ data.github }}" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">GitHub</a>
         <a href="{{ data.linkedin }}" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">LinkedIn</a>
-        <a href="mailto:{{ data.email }}" class="hover:text-emerald-400 transition-colors">Email</a>
-        <a href="{{ url_for('resume') }}" class="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">Resume</a>
-        <a href="{{ url_for('admin') }}" class="hover:text-emerald-400 transition-colors text-slate-600 hover:text-slate-400">Admin</a>
         <span class="text-slate-700 hidden sm:inline">|</span>
-        <span class="text-slate-500">&copy; {{ current_year }} Neel Rupareliya &bull; All Rights Reserved &bull; Software Systems &amp; Automation Architecture</span>
+        <span class="text-slate-500">&copy; {{ current_year }} Neel Rupareliya</span>
       </div>
 
     </div>
