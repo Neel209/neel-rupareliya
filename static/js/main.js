@@ -110,6 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealElements.forEach((el) => revealObserver.observe(el));
 
+  // 4b. Initialize Skill Progress Bars from data-level
+  document.querySelectorAll('.skill-progress-fill').forEach((bar) => {
+    const level = bar.getAttribute('data-level');
+    if (level) {
+      bar.style.width = level;
+    }
+  });
+
   // 5. Toast Notification System
   window.showToast = function (message, type = 'success') {
     let container = document.getElementById('toast-container');

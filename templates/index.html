@@ -134,11 +134,24 @@
   <section class="px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full overflow-hidden reveal" data-testid="profile-section">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full min-w-0">
       
-      <!-- Left Column: Editorial Summary -->
+      <!-- Left Column: Editorial Summary & Author Portrait -->
       <div class="w-full min-w-0 lg:col-span-6 space-y-5">
-        <div class="font-mono text-xs text-emerald-400 tracking-[0.35em] uppercase">
-          <span class="text-slate-600">// </span>DEVELOPER PROFILE
+        <div class="flex items-center gap-4">
+          <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border border-emerald-500/40 p-0.5 bg-[#0b0f18] shrink-0 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+            <img src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Neel Rupareliya — Python Developer &amp; Automation Engineer" width="80" height="80" loading="eager" class="w-full h-full object-cover rounded-lg">
+            <span class="absolute bottom-1 right-1 w-3 h-3 bg-emerald-400 border-2 border-[#07090e] rounded-full animate-pulse" title="Available for work"></span>
+          </div>
+          <div>
+            <div class="font-mono text-xs text-emerald-400 tracking-[0.35em] uppercase">
+              <span class="text-slate-600">// </span>DEVELOPER PROFILE
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-2xl text-slate-100">
+              Neel Rupareliya
+            </h3>
+            <span class="text-[11px] font-mono text-emerald-400/90">MCA Graduate Candidate &bull; Gujarat, India</span>
+          </div>
         </div>
+
         <h2 class="font-display font-bold text-2xl sm:text-4xl lg:text-5xl text-slate-50 leading-tight break-words">
           Code that runs the business, <span class="text-emerald-400 glow-text">not just the server.</span>
         </h2>
@@ -527,7 +540,7 @@
                 <span class="text-[10px] text-slate-500">{{ item.level }}</span>
               </div>
               <div class="w-full h-1 bg-slate-900 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: {{ item.level }};"></div>
+                <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full skill-progress-fill" data-level="{{ item.level }}"></div>
               </div>
             </li>
             {% endfor %}
@@ -695,6 +708,44 @@
           </button>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FAQ SECTION — FREQUENTLY ASKED QUESTIONS (SEARCH ENGINE RICH RESULTS)
+       ========================================================================= -->
+  <section id="faqs" class="px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full overflow-hidden reveal" data-testid="faq-section">
+    <div class="mb-10">
+      <div class="font-mono text-xs text-emerald-400 tracking-[0.35em] uppercase mb-2">
+        <span class="text-slate-600">// </span>KNOWLEDGE BASE &amp; FAQ
+      </div>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-slate-50 leading-tight">
+        Frequently Asked <span class="text-emerald-400 glow-text">Questions</span>
+      </h2>
+      <p class="mt-3 font-mono text-sm text-slate-400 max-w-2xl leading-relaxed">
+        Essential insights into Neel Rupareliya&apos;s background, Python &amp; automation engineering services, tech stack, and hiring availability.
+      </p>
+    </div>
+
+    <div class="space-y-4 max-w-4xl" itemscope itemtype="https://schema.org/FAQPage">
+      {% for faq in data.faqs %}
+      <div class="cyber-card rounded-xl border border-emerald-500/20 bg-[#090d15]/80 overflow-hidden transition-all duration-300" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details class="group p-5 sm:p-6 cursor-pointer" {% if loop.first %}open{% endif %}>
+          <summary class="flex items-center justify-between font-mono text-sm sm:text-base font-semibold text-slate-100 hover:text-emerald-300 list-none transition-colors">
+            <span class="flex items-center gap-3 pr-4" itemprop="name">
+              <span class="text-emerald-400 font-bold">[0{{ loop.index }}]</span>
+              <span>{{ faq.question }}</span>
+            </span>
+            <span class="text-emerald-400 font-bold group-open:rotate-180 transition-transform duration-200 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-emerald-500/10 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">{{ faq.answer }}</p>
+          </div>
+        </details>
+      </div>
+      {% endfor %}
     </div>
   </section>
 

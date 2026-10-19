@@ -40,6 +40,7 @@ PORTFOLIO_DATA = {
     "linkedin": "https://www.linkedin.com/in/neelrupareliya",
     "github": "https://github.com/Neel209",
     "telegram": "https://t.me/neelrupareliya",
+    "site_url": "https://neelrupareliya.in",
     "summary": "Python developer specialising in web backends, browser automation, and SaaS pipelines. Experienced in Python, Flask, FastAPI, Playwright/Selenium, Pine Script, and database architectures (MongoDB Atlas, MySQL, Redis, SQLite). Focused on building clean, practical, and dependable software that removes manual work entirely.",
     "stats": [
         {"value": "5+", "suffix": "+", "label": "Core Projects Built", "sub": "Production & SaaS"},
@@ -219,6 +220,33 @@ PORTFOLIO_DATA = {
             "status": "Completed (CGPA: 7.3)",
             "focus": "Programming Fundamentals, Data Structures, OOP, Web Technologies, Database Systems"
         }
+    ],
+    "faqs": [
+        {
+            "id": "faq-1",
+            "question": "Who is Neel Rupareliya?",
+            "answer": "Neel Rupareliya is an experienced Python Developer and Automation Engineer from Gujarat, India. He holds a Bachelor of Computer Applications (BCA) and is completing a Master of Computer Applications (MCA). Neel specializes in high-reliability web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), and automated trading systems (Pine Script, TradingView)."
+        },
+        {
+            "id": "faq-2",
+            "question": "What technical services does Neel Rupareliya provide?",
+            "answer": "Neel provides specialized software engineering in Python backend architectures, custom REST and WebSocket APIs, headless browser automation bots, Telegram automation engines, TradingView alert webhooks, and scalable database architectures using MongoDB Atlas, PostgreSQL, and Redis."
+        },
+        {
+            "id": "faq-3",
+            "question": "What production platforms has Neel Rupareliya engineered?",
+            "answer": "Neel engineered Trade Masters (trademasters.co.in) — a full-stack algorithmic trading SaaS with automatic indicator provisioning; an Algorithmic Trading Alert Dispatcher on Telegram with sub-second execution; and an automated document classification platform using Python AI models."
+        },
+        {
+            "id": "faq-4",
+            "question": "Is Neel Rupareliya available for hire or remote contracts?",
+            "answer": "Yes. Neel is open to full-time remote software engineering roles, contract automation development, and technical consulting for global companies and startups."
+        },
+        {
+            "id": "faq-5",
+            "question": "How can I contact or hire Neel Rupareliya?",
+            "answer": "You can reach Neel directly via email at neelrupareliya09@gmail.com, on LinkedIn at linkedin.com/in/neelrupareliya, by phone at +91 84697 90287, or through the interactive contact console on his official website neelrupareliya.in."
+        }
     ]
 }
 
@@ -319,6 +347,14 @@ def build_resume_pdf() -> bytes:
 # =========================================================================
 # Web Routes
 # =========================================================================
+@app.context_processor
+def inject_seo_context():
+    return {
+        'site_url': 'https://neelrupareliya.in',
+        'current_year': datetime.now().year,
+        'google_verification': os.environ.get('GOOGLE_SITE_VERIFICATION', '')
+    }
+
 @app.route('/')
 def index():
     return render_template('index.html', data=PORTFOLIO_DATA, current_year=datetime.now().year)
@@ -896,7 +932,14 @@ Allow: /
 Disallow: /admin
 Disallow: /api/admin/
 
-Sitemap: https://neelrupareliya.com/sitemap.xml
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://neelrupareliya.in/sitemap.xml
 """
     return app.response_class(content, mimetype='text/plain')
 
@@ -905,23 +948,43 @@ def sitemap():
     now_date = datetime.utcnow().strftime("%Y-%m-%d")
     xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://neelrupareliya.com/</loc>
+    <loc>https://neelrupareliya.in/</loc>
     <lastmod>{now_date}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://neelrupareliya.in/static/images/avatar.jpg</image:loc>
+      <image:title>Neel Rupareliya — Python Developer &amp; Automation Engineer</image:title>
+      <image:caption>Neel Rupareliya professional portrait and developer profile</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://neelrupareliya.in/static/images/automation.jpg</image:loc>
+      <image:title>Neel Rupareliya — Automated Pipelines &amp; Systems Architecture</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://neelrupareliya.in/static/images/trademasters.jpg</image:loc>
+      <image:title>Trade Masters FinTech Platform by Neel Rupareliya</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://neelrupareliya.in/static/images/proofai.jpg</image:loc>
+      <image:title>Document Classification AI Platform by Neel Rupareliya</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://neelrupareliya.com/resume</loc>
+    <loc>https://neelrupareliya.in/resume</loc>
     <lastmod>{now_date}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 </urlset>"""
     return app.response_class(xml_content, mimetype='application/xml')
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json', mimetype='application/manifest+json')
+
 
 @app.route('/api/terminal', methods=['POST'])
 def api_terminal():

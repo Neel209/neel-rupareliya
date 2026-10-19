@@ -1,0 +1,17 @@
+{
+  "name": "Neel Rupareliya — Python Developer & Automation Engineer",
+  "short_name": "Neel Rupareliya",
+  "description": "Portfolio and Systems Architecture of Neel Rupareliya — Python Developer & Automation Engineer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07090e",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/static/images/avatar.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

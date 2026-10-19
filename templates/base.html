@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{{ data.name }} — Python Developer &amp; Automation Engineer{% endblock %}</title>
+  <title>{% block title %}{{ data.name }} — Python Developer &amp; Automation Engineer | Portfolio{% endblock %}</title>
   
   <!-- Comprehensive SEO Meta Tags -->
-  <link rel="canonical" href="https://neelrupareliya.com{{ request.path }}">
-  <meta name="description" content="Portfolio of Neel Rupareliya — Python Developer &amp; Automation Engineer. Specializing in high-performance web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), Pine Script TradingView integration, and fail-safe database architectures.">
-  <meta name="keywords" content="Neel Rupareliya, Python Developer, Automation Engineer, Backend Developer, Flask, FastAPI, Playwright, Selenium, Pine Script, TradingView, MongoDB Atlas, Redis, Telegram Bot API, Gujarat, India, Remote Python Developer, SaaS Architecture">
+  <link rel="canonical" href="https://neelrupareliya.in{{ request.path }}">
+  <meta name="description" content="Official portfolio of Neel Rupareliya — Python Developer &amp; Automation Engineer based in Gujarat, India. Specializing in high-performance web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), Pine Script TradingView integration, and fail-safe database architectures.">
+  <meta name="keywords" content="Neel Rupareliya, Neel Rupareliya Python, Neel Rupareliya Developer, Neel Rupareliya Portfolio, Python Developer India, Python Automation Engineer, Backend Developer Gujarat, Flask, FastAPI, Playwright, Selenium, Pine Script, TradingView, MongoDB Atlas, Redis, Telegram Bot API, Remote Python Developer, SaaS Architecture">
   <meta name="author" content="Neel Rupareliya">
   <meta name="creator" content="Neel Rupareliya">
   <meta name="publisher" content="Neel Rupareliya">
@@ -17,7 +17,10 @@
   <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="theme-color" content="#07090e">
   <meta name="rating" content="General">
-  <meta name="revisit-after" content="7 days">
+  <meta name="revisit-after" content="3 days">
+  {% if google_verification %}
+  <meta name="google-site-verification" content="{{ google_verification }}">
+  {% endif %}
 
   <!-- Geo & Regional Meta Tags -->
   <meta name="geo.region" content="IN-GJ">
@@ -29,10 +32,13 @@
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="Neel Rupareliya Portfolio">
   <meta property="og:title" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
-  <meta property="og:description" content="Building self-running backends, automated pipelines &amp; browser bots that work while you sleep.">
-  <meta property="og:url" content="https://neelrupareliya.com{{ request.path }}">
+  <meta property="og:description" content="Portfolio of Neel Rupareliya — Python Developer &amp; Automation Engineer. Building self-running backends, automated pipelines &amp; browser bots.">
+  <meta property="og:url" content="https://neelrupareliya.in{{ request.path }}">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://neelrupareliya.com/static/images/automation.jpg">
+  <meta property="og:image" content="https://neelrupareliya.in/static/images/automation.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
   <meta property="profile:first_name" content="Neel">
   <meta property="profile:last_name" content="Rupareliya">
   <meta property="profile:username" content="Neel209">
@@ -41,7 +47,11 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
   <meta name="twitter:description" content="Specializing in Python backends, headless Playwright bots, and automated trading pipeline systems.">
-  <meta name="twitter:image" content="https://neelrupareliya.com/static/images/automation.jpg">
+  <meta name="twitter:image" content="https://neelrupareliya.in/static/images/automation.jpg">
+  <meta name="twitter:image:alt" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
+
+  <!-- Web App Manifest for Mobile & PWA Rankings -->
+  <link rel="manifest" href="{{ url_for('manifest') }}">
 
   <!-- Schema.org JSON-LD Structured Data for High Google Authority -->
   <script type="application/ld+json">
@@ -50,22 +60,37 @@
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://neelrupareliya.com/#person",
+        "@id": "https://neelrupareliya.in/#person",
         "name": "Neel Rupareliya",
         "givenName": "Neel",
         "familyName": "Rupareliya",
+        "alternateName": ["Neel", "Neel Rupareliya Developer", "Neel Rupareliya Python"],
         "jobTitle": "Python Developer & Automation Engineer",
-        "description": "Python developer specialising in web backends, browser automation, and SaaS pipelines. Experienced in Python, Flask, FastAPI, Playwright, Selenium, Pine Script, and database architectures.",
-        "url": "https://neelrupareliya.com",
-        "email": "neelrupareliya09@gmail.com",
+        "description": "Python Developer & Automation Engineer based in Gujarat, India. Specializing in high-performance web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), TradingView Pine Script webhooks, and scalable database architectures.",
+        "url": "https://neelrupareliya.in",
+        "image": "https://neelrupareliya.in/static/images/avatar.jpg",
+        "email": "mailto:neelrupareliya09@gmail.com",
         "telephone": "+91 84697 90287",
         "gender": "https://schema.org/Male",
         "nationality": "Indian",
+        "knowsLanguage": ["English", "Hindi", "Gujarati"],
         "address": {
           "@type": "PostalAddress",
           "addressRegion": "Gujarat",
           "addressCountry": "India"
         },
+        "hasOccupation": [
+          {
+            "@type": "Occupation",
+            "name": "Python Developer",
+            "skills": "Python, Flask, FastAPI, PostgreSQL, MongoDB, Redis, Docker"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Automation Engineer",
+            "skills": "Playwright, Selenium, Browser Automation, TradingView Webhooks, Pine Script, Task Scheduling"
+          }
+        ],
         "sameAs": [
           "https://github.com/Neel209",
           "https://www.linkedin.com/in/neelrupareliya",
@@ -78,6 +103,7 @@
           "Playwright",
           "Selenium",
           "Pine Script",
+          "TradingView",
           "MongoDB Atlas",
           "PostgreSQL",
           "Redis",
@@ -92,35 +118,103 @@
         "alumniOf": [
           {
             "@type": "EducationalOrganization",
-            "name": "Maharaja Krushnakumarsinhji Bhavnagar University"
+            "name": "The Maharaja Sayajirao University of Baroda",
+            "url": "https://www.msubaroda.ac.in/"
           },
           {
             "@type": "EducationalOrganization",
-            "name": "The Maharaja Sayajirao University of Baroda"
+            "name": "Maharaja Krushnakumarsinhji Bhavnagar University",
+            "url": "https://www.mkbhavuni.edu.in/"
           }
         ]
       },
       {
         "@type": "WebSite",
-        "@id": "https://neelrupareliya.com/#website",
-        "url": "https://neelrupareliya.com",
+        "@id": "https://neelrupareliya.in/#website",
+        "url": "https://neelrupareliya.in",
         "name": "Neel Rupareliya Portfolio",
         "description": "Official developer portfolio of Neel Rupareliya — Python Developer and Automation Engineer",
         "publisher": {
-          "@id": "https://neelrupareliya.com/#person"
-        }
+          "@id": "https://neelrupareliya.in/#person"
+        },
+        "inLanguage": "en-US"
       },
       {
         "@type": "ProfilePage",
-        "@id": "https://neelrupareliya.com/#webpage",
-        "url": "https://neelrupareliya.com",
-        "name": "Neel Rupareliya — Developer Portfolio & Systems Architecture",
+        "@id": "https://neelrupareliya.in/#webpage",
+        "url": "https://neelrupareliya.in",
+        "name": "Neel Rupareliya — Python Developer & Automation Engineer | Portfolio",
         "isPartOf": {
-          "@id": "https://neelrupareliya.com/#website"
+          "@id": "https://neelrupareliya.in/#website"
         },
         "about": {
-          "@id": "https://neelrupareliya.com/#person"
-        }
+          "@id": "https://neelrupareliya.in/#person"
+        },
+        "primaryImageOfPage": "https://neelrupareliya.in/static/images/avatar.jpg"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://neelrupareliya.in/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://neelrupareliya.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Resume",
+            "item": "https://neelrupareliya.in/resume"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://neelrupareliya.in/#faqs",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Who is Neel Rupareliya?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Neel Rupareliya is an experienced Python Developer and Automation Engineer from Gujarat, India. He holds a Bachelor of Computer Applications (BCA) and is completing a Master of Computer Applications (MCA). Neel specializes in high-reliability web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), and automated trading systems (Pine Script, TradingView)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What technical services does Neel Rupareliya provide?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Neel provides specialized software engineering in Python backend architectures, custom REST and WebSocket APIs, headless browser automation bots, Telegram automation engines, TradingView alert webhooks, and scalable database architectures using MongoDB Atlas, PostgreSQL, and Redis."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What production platforms has Neel Rupareliya engineered?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Neel engineered Trade Masters (trademasters.co.in) — a full-stack algorithmic trading SaaS with automatic indicator provisioning; an Algorithmic Trading Alert Dispatcher on Telegram with sub-second execution; and an automated document classification platform using Python AI models."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Neel Rupareliya available for hire or remote contracts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Neel is open to full-time remote software engineering roles, contract automation development, and technical consulting for global companies and startups."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I contact or hire Neel Rupareliya?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can reach Neel directly via email at neelrupareliya09@gmail.com, on LinkedIn at linkedin.com/in/neelrupareliya, by phone at +91 84697 90287, or through the interactive contact console on his official website neelrupareliya.in."
+            }
+          }
+        ]
       }
     ]
   }
@@ -215,6 +309,9 @@
         </button>
         <button onclick="scrollToSection('#terminal')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>terminal
+        </button>
+        <button onclick="scrollToSection('#faqs')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
+          <span class="text-emerald-600 mr-1">./</span>faq
         </button>
         <button onclick="scrollToSection('#contact')" class="text-slate-400 hover:text-emerald-300 px-3 py-2 rounded-md hover:bg-emerald-500/10 transition-colors">
           <span class="text-emerald-600 mr-1">./</span>contact
@@ -315,9 +412,17 @@
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
       </button>
 
-      <button onclick="scrollToSection('#contact');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+      <button onclick="scrollToSection('#faqs');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
         <div class="flex items-center gap-2.5">
           <span class="text-emerald-500 font-semibold">[06]</span>
+          <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Knowledge &amp; FAQ</span>
+        </div>
+        <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
+      </button>
+
+      <button onclick="scrollToSection('#contact');" class="mobile-link w-full text-left p-3 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all flex items-center justify-between group">
+        <div class="flex items-center gap-2.5">
+          <span class="text-emerald-500 font-semibold">[07]</span>
           <span class="text-slate-200 group-hover:text-emerald-300 font-medium">Direct Contact</span>
         </div>
         <span class="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all">&rarr;</span>
