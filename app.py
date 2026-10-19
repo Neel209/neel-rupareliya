@@ -1021,6 +1021,12 @@ def favicon():
 def apple_touch_icon():
     return send_from_directory('static', 'apple-touch-icon.png', mimetype='image/png')
 
+@app.route('/google3c83dd3bbff0ca10.html')
+@app.route('/google<path:verification_id>.html')
+def google_verification_file(verification_id=None):
+    filename = f"google{verification_id}.html" if verification_id else "google3c83dd3bbff0ca10.html"
+    return send_from_directory('static', filename, mimetype='text/html')
+
 
 @app.route('/api/terminal', methods=['POST'])
 def api_terminal():
