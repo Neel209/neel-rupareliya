@@ -3,17 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{{ data.name }} — Python Developer & Automation Engineer{% endblock %}</title>
+  <title>{% block title %}{{ data.name }} — Python Developer &amp; Automation Engineer{% endblock %}</title>
   
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Neel Rupareliya — Python Developer & Automation Engineer. Building self-running backends, automated pipelines & browser bots that work while you sleep.">
-  <meta name="keywords" content="Neel Rupareliya, Python Developer, Automation Engineer, Flask, FastAPI, Playwright, Pine Script, MongoDB, Telegram Bot, Gujarat India">
+  <!-- Comprehensive SEO Meta Tags -->
+  <link rel="canonical" href="https://neelrupareliya.com{{ request.path }}">
+  <meta name="description" content="Portfolio of Neel Rupareliya — Python Developer &amp; Automation Engineer. Specializing in high-performance web backends (Flask, FastAPI), browser automation pipelines (Playwright, Selenium), Pine Script TradingView integration, and fail-safe database architectures.">
+  <meta name="keywords" content="Neel Rupareliya, Python Developer, Automation Engineer, Backend Developer, Flask, FastAPI, Playwright, Selenium, Pine Script, TradingView, MongoDB Atlas, Redis, Telegram Bot API, Gujarat, India, Remote Python Developer, SaaS Architecture">
   <meta name="author" content="Neel Rupareliya">
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Neel Rupareliya — Python Developer & Automation Engineer">
-  <meta property="og:description" content="Building self-running backends, automated pipelines & browser bots that work while you sleep.">
+  <meta name="creator" content="Neel Rupareliya">
+  <meta name="publisher" content="Neel Rupareliya">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="theme-color" content="#07090e">
+  <meta name="rating" content="General">
+  <meta name="revisit-after" content="7 days">
+
+  <!-- Geo & Regional Meta Tags -->
+  <meta name="geo.region" content="IN-GJ">
+  <meta name="geo.placename" content="Gujarat, India">
+  <meta name="geo.position" content="21.7645;72.1519">
+  <meta name="ICBM" content="21.7645, 72.1519">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Neel Rupareliya Portfolio">
+  <meta property="og:title" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
+  <meta property="og:description" content="Building self-running backends, automated pipelines &amp; browser bots that work while you sleep.">
+  <meta property="og:url" content="https://neelrupareliya.com{{ request.path }}">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://neelrupareliya.com/static/images/automation.jpg">
+  <meta property="profile:first_name" content="Neel">
+  <meta property="profile:last_name" content="Rupareliya">
+  <meta property="profile:username" content="Neel209">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Neel Rupareliya — Python Developer &amp; Automation Engineer">
+  <meta name="twitter:description" content="Specializing in Python backends, headless Playwright bots, and automated trading pipeline systems.">
+  <meta name="twitter:image" content="https://neelrupareliya.com/static/images/automation.jpg">
+
+  <!-- Schema.org JSON-LD Structured Data for High Google Authority -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://neelrupareliya.com/#person",
+        "name": "Neel Rupareliya",
+        "givenName": "Neel",
+        "familyName": "Rupareliya",
+        "jobTitle": "Python Developer & Automation Engineer",
+        "description": "Python developer specialising in web backends, browser automation, and SaaS pipelines. Experienced in Python, Flask, FastAPI, Playwright, Selenium, Pine Script, and database architectures.",
+        "url": "https://neelrupareliya.com",
+        "email": "neelrupareliya09@gmail.com",
+        "telephone": "+91 84697 90287",
+        "gender": "https://schema.org/Male",
+        "nationality": "Indian",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Gujarat",
+          "addressCountry": "India"
+        },
+        "sameAs": [
+          "https://github.com/Neel209",
+          "https://www.linkedin.com/in/neelrupareliya",
+          "https://t.me/neelrupareliya"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Flask",
+          "FastAPI",
+          "Playwright",
+          "Selenium",
+          "Pine Script",
+          "MongoDB Atlas",
+          "PostgreSQL",
+          "Redis",
+          "MySQL",
+          "SQLite",
+          "Browser Automation",
+          "Web Scraping",
+          "RESTful APIs",
+          "Docker",
+          "SaaS Architecture"
+        ],
+        "alumniOf": [
+          {
+            "@type": "EducationalOrganization",
+            "name": "Maharaja Krushnakumarsinhji Bhavnagar University"
+          },
+          {
+            "@type": "EducationalOrganization",
+            "name": "The Maharaja Sayajirao University of Baroda"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://neelrupareliya.com/#website",
+        "url": "https://neelrupareliya.com",
+        "name": "Neel Rupareliya Portfolio",
+        "description": "Official developer portfolio of Neel Rupareliya — Python Developer and Automation Engineer",
+        "publisher": {
+          "@id": "https://neelrupareliya.com/#person"
+        }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://neelrupareliya.com/#webpage",
+        "url": "https://neelrupareliya.com",
+        "name": "Neel Rupareliya — Developer Portfolio & Systems Architecture",
+        "isPartOf": {
+          "@id": "https://neelrupareliya.com/#website"
+        },
+        "about": {
+          "@id": "https://neelrupareliya.com/#person"
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2307090e' stroke='%2310b981' stroke-width='4'/><text x='50' y='65' font-size='44' font-family='monospace' font-weight='bold' fill='%2310b981' text-anchor='middle'>&gt;_</text></svg>">
@@ -275,6 +386,7 @@
         <a href="{{ data.linkedin }}" target="_blank" class="hover:text-emerald-400 transition-colors">LinkedIn</a>
         <a href="mailto:{{ data.email }}" class="hover:text-emerald-400 transition-colors">Email</a>
         <a href="{{ url_for('resume') }}" class="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">Resume</a>
+        <a href="{{ url_for('admin') }}" class="hover:text-emerald-400 transition-colors text-slate-600 hover:text-slate-400">Admin</a>
         <span class="text-slate-700 hidden sm:inline">|</span>
         <span class="text-slate-500">&copy; {{ current_year }} Neel Rupareliya &bull; All Rights Reserved &bull; Software Systems &amp; Automation Architecture</span>
       </div>

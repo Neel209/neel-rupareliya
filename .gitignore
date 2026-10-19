@@ -39,6 +39,7 @@ venv.bak/
 .env.local
 .env.*.local
 inquiries.json
+analytics.json
 
 # Operating System files
 .DS_Store

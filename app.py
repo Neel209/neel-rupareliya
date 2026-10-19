@@ -4,10 +4,12 @@ import time
 import json
 import smtplib
 import ssl
+import hashlib
+import uuid
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime
-from flask import Flask, render_template, request, jsonify, send_file, send_from_directory
+from datetime import datetime, timedelta
+from flask import Flask, render_template, request, jsonify, send_file, send_from_directory, session, redirect, url_for, make_response
 from fpdf import FPDF
 
 try:
@@ -19,8 +21,10 @@ except ImportError:
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'neel-portfolio-super-secret-key-2026')
 
-# Persistent inquiries log file
+# Persistent files
 INQUIRIES_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'inquiries.json')
+ANALYTICS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'analytics.json')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'neel2026')
 
 # Profile Data Model based on Resume & Design Guidelines
 PORTFOLIO_DATA = {
@@ -352,6 +356,263 @@ def api_status():
         }
     })
 
+# =========================================================================
+# Analytics Engine (Unique Visitor Counts)
+# =========================================================================
+def load_analytics():
+    if os.path.exists(ANALYTICS_FILE):
+        try:
+            with open(ANALYTICS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {
+        "visitors": {},
+        "daily_unique": {},
+        "pages": {},
+        "devices": {"Desktop": 0, "Mobile": 0, "Tablet": 0}
+    }
+
+def save_analytics(data):
+    try:
+        with open(ANALYTICS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print(f"[WARN] Failed to save analytics: {e}")
+
+def detect_device(ua_string):
+    ua = (ua_string or '').lower()
+    if 'tablet' in ua or 'ipad' in ua:
+        return 'Tablet'
+    elif 'mobile' in ua or 'android' in ua or 'iphone' in ua:
+        return 'Mobile'
+    return 'Desktop'
+
+def track_visitor_hit(path):
+    # Only track public content pages (ignore admin, static, api, robots, sitemap)
+    if (path.startswith('/static') or 
+        path.startswith('/api/admin') or 
+        path.startswith('/admin') or 
+        path in ['/favicon.ico', '/robots.txt', '/sitemap.xml']):
+        return None
+
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1')
+    if ',' in client_ip:
+        client_ip = client_ip.split(',')[0].strip()
+
+    ua = request.headers.get('User-Agent', '')
+    device = detect_device(ua)
+
+    visitor_id = request.cookies.get('_nid')
+    new_cookie = False
+    if not visitor_id:
+        raw = f"{client_ip}-{ua}"
+        visitor_id = hashlib.sha256(raw.encode('utf-8')).hexdigest()[:16]
+        new_cookie = True
+
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    now_iso = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+    data = load_analytics()
+    visitors = data.setdefault("visitors", {})
+    daily_unique = data.setdefault("daily_unique", {})
+    pages = data.setdefault("pages", {})
+    devices = data.setdefault("devices", {"Desktop": 0, "Mobile": 0, "Tablet": 0})
+
+    if visitor_id not in visitors:
+        visitors[visitor_id] = {
+            "first_seen": now_iso,
+            "last_seen": now_iso,
+            "device": device,
+            "days": [today],
+            "hits": 1
+        }
+        devices[device] = devices.get(device, 0) + 1
+        daily_unique[today] = daily_unique.get(today, 0) + 1
+    else:
+        v = visitors[visitor_id]
+        v["last_seen"] = now_iso
+        v["hits"] = v.get("hits", 0) + 1
+        if today not in v.get("days", []):
+            v.setdefault("days", []).append(today)
+            daily_unique[today] = daily_unique.get(today, 0) + 1
+
+    pages[path] = pages.get(path, 0) + 1
+    save_analytics(data)
+
+    return visitor_id if new_cookie else None
+
+@app.before_request
+def before_request_hook():
+    if request.method == 'GET':
+        cookie_id = track_visitor_hit(request.path)
+        request._set_cookie_id = cookie_id
+
+@app.after_request
+def after_request_hook(response):
+    cookie_id = getattr(request, '_set_cookie_id', None)
+    if cookie_id:
+        response.set_cookie('_nid', cookie_id, max_age=31536000, httponly=True, samesite='Lax')
+    return response
+
+def get_analytics_summary():
+    data = load_analytics()
+    visitors = data.get("visitors", {})
+    daily_unique = data.get("daily_unique", {})
+    devices = data.get("devices", {})
+    pages = data.get("pages", {})
+
+    total_unique = len(visitors)
+    today_str = datetime.utcnow().strftime("%Y-%m-%d")
+    today_unique = daily_unique.get(today_str, 0)
+
+    # Last 7 days daily counts
+    chart_data = []
+    week_unique = 0
+    max_count = 1
+    for i in range(6, -1, -1):
+        d = (datetime.utcnow() - timedelta(days=i)).strftime("%Y-%m-%d")
+        cnt = daily_unique.get(d, 0)
+        week_unique += cnt
+        if cnt > max_count:
+            max_count = cnt
+        chart_data.append({
+            "date": d,
+            "day_name": datetime.strptime(d, "%Y-%m-%d").strftime("%a"),
+            "label": datetime.strptime(d, "%Y-%m-%d").strftime("%b %d"),
+            "count": cnt
+        })
+
+    for item in chart_data:
+        item["height_percent"] = max(12, int((item["count"] / max_count) * 100)) if max_count > 0 else 12
+
+    # Last 30 days
+    last_30_dates = [(datetime.utcnow() - timedelta(days=i)).strftime("%Y-%m-%d") for i in range(29, -1, -1)]
+    month_unique = sum(daily_unique.get(d, 0) for d in last_30_dates)
+
+    total_devices = sum(devices.values()) or 1
+    device_stats = {
+        k: {
+            "count": v,
+            "percent": round((v / total_devices) * 100, 1)
+        }
+        for k, v in devices.items()
+    }
+
+    return {
+        "total_unique": total_unique,
+        "today_unique": today_unique,
+        "week_unique": week_unique,
+        "month_unique": month_unique,
+        "chart_data": chart_data,
+        "devices": device_stats,
+        "pages": pages
+    }
+
+def get_all_inquiries():
+    if os.path.exists(INQUIRIES_FILE):
+        try:
+            with open(INQUIRIES_FILE, 'r', encoding='utf-8') as f:
+                items = json.load(f)
+                changed = False
+                for idx, item in enumerate(items):
+                    if not item.get('id'):
+                        item['id'] = f"inq_{idx+1}_{abs(hash(item.get('email', '') + item.get('received_at', ''))) % 100000}"
+                        changed = True
+                    if not item.get('status'):
+                        item['status'] = 'pending'
+                        changed = True
+                if changed:
+                    with open(INQUIRIES_FILE, 'w', encoding='utf-8') as fw:
+                        json.dump(items, fw, indent=2, ensure_ascii=False)
+                return list(reversed(items))
+        except Exception:
+            pass
+    return []
+
+def send_reply_email(to_email, to_name, subject, reply_body):
+    """Sends an email reply to a user inquiry using configured SMTP credentials."""
+    sender_email = os.environ.get('MAIL_USERNAME', os.environ.get('SMTP_USER', 'neelrupareliya09@gmail.com')).strip()
+    smtp_server = os.environ.get('MAIL_SERVER', os.environ.get('SMTP_SERVER', 'smtp.gmail.com')).strip()
+    smtp_port = int(os.environ.get('MAIL_PORT', os.environ.get('SMTP_PORT', 587)))
+    smtp_pass = os.environ.get('MAIL_PASSWORD', os.environ.get('SMTP_PASSWORD', os.environ.get('GMAIL_APP_PASSWORD', ''))).strip()
+
+    if not smtp_pass:
+        print(f"[INFO] Cannot dispatch reply via SMTP: password not configured in environment. Recorded in admin console.")
+        return False, "SMTP password not set in environment (reply recorded in admin console)"
+
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject if subject.startswith("Re:") else f"Re: {subject}"
+        msg["From"] = f"Neel Rupareliya <{sender_email}>"
+        msg["To"] = to_email
+        msg["Reply-To"] = sender_email
+
+        text_content = f"""Hello {to_name},
+
+{reply_body}
+
+---
+Best regards,
+Neel Rupareliya
+Python Developer × Automation Engineer
+neelrupareliya09@gmail.com | +91 84697 90287
+https://github.com/Neel209
+"""
+
+        html_content = f"""
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #07090e; color: #f1f5f9; padding: 24px; margin: 0; }}
+    .card {{ max-width: 600px; margin: 0 auto; background: #0c121e; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }}
+    .brand {{ font-family: monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #10b981; margin-bottom: 8px; font-weight: bold; }}
+    h2 {{ color: #ffffff; margin-top: 4px; margin-bottom: 20px; font-size: 20px; }}
+    .content-box {{ background: #05070c; border: 1px solid rgba(16, 185, 129, 0.2); border-left: 3px solid #10b981; border-radius: 6px; padding: 20px; margin: 20px 0; font-size: 14px; line-height: 1.65; color: #e2e8f0; white-space: pre-wrap; }}
+    .sig {{ font-size: 12px; color: #94a3b8; font-family: monospace; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; margin-top: 24px; }}
+    .sig strong {{ color: #10b981; }}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">&gt; NEEL RUPARELIYA &bull; DEVELOPER DIRECT REPLY</div>
+    <h2>{subject}</h2>
+    <p style="font-size: 14px; color: #cbd5e1;">Hello {to_name},</p>
+    <div class="content-box">{reply_body}</div>
+    <div class="sig">
+      <strong>Neel Rupareliya</strong><br>
+      Python Developer &times; Automation Engineer<br>
+      Gujarat, India &bull; Remote Worldwide<br>
+      Email: <a href="mailto:neelrupareliya09@gmail.com" style="color: #34d399;">neelrupareliya09@gmail.com</a> | Phone: +91 84697 90287<br>
+      GitHub: <a href="https://github.com/Neel209" style="color: #34d399;">github.com/Neel209</a>
+    </div>
+  </div>
+</body>
+</html>
+"""
+        msg.attach(MIMEText(text_content, "plain"))
+        msg.attach(MIMEText(html_content, "html"))
+
+        context = ssl.create_default_context()
+        if smtp_port == 465:
+            with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context, timeout=12) as server:
+                server.login(sender_email, smtp_pass)
+                server.sendmail(sender_email, [to_email], msg.as_string())
+        else:
+            with smtplib.SMTP(smtp_server, smtp_port, timeout=12) as server:
+                server.ehlo()
+                server.starttls(context=context)
+                server.ehlo()
+                server.login(sender_email, smtp_pass)
+                server.sendmail(sender_email, [to_email], msg.as_string())
+
+        return True, "Email reply transmitted successfully"
+    except Exception as e:
+        print(f"[ERROR] Reply SMTP send failed: {e}")
+        return False, str(e)
+
 def save_inquiry(msg_obj):
     """Persist inquiry to disk so no contact inquiries are ever lost."""
     try:
@@ -503,7 +764,9 @@ def api_contact():
         client_ip=client_ip
     )
 
+    inquiry_id = f"inq_{int(time.time())}_{uuid.uuid4().hex[:6]}"
     msg_obj = {
+        "id": inquiry_id,
         "name": name,
         "email": email,
         "subject": subject,
@@ -512,7 +775,10 @@ def api_contact():
         "client_ip": client_ip,
         "destination": "neelrupareliya09@gmail.com",
         "email_dispatched": email_sent,
-        "dispatch_status": email_log
+        "dispatch_status": email_log,
+        "status": "pending",
+        "replied_at": None,
+        "reply_content": None
     }
     CONTACT_MESSAGES.append(msg_obj)
     save_inquiry(msg_obj)
@@ -526,6 +792,136 @@ def api_contact():
 @app.route('/api/contact/messages', methods=['GET'])
 def get_contact_messages():
     return jsonify({"messages": list(reversed(CONTACT_MESSAGES))})
+
+# =========================================================================
+# Admin Panel & SEO Routes
+# =========================================================================
+@app.route('/admin')
+def admin():
+    if not session.get('admin_authenticated'):
+        return render_template('admin.html', authenticated=False, error=request.args.get('error'))
+
+    analytics = get_analytics_summary()
+    inquiries = get_all_inquiries()
+    smtp_configured = bool(os.environ.get('MAIL_PASSWORD', os.environ.get('SMTP_PASSWORD', os.environ.get('GMAIL_APP_PASSWORD', ''))).strip())
+
+    return render_template(
+        'admin.html',
+        authenticated=True,
+        analytics=analytics,
+        inquiries=inquiries,
+        smtp_configured=smtp_configured,
+        admin_email="neelrupareliya09@gmail.com",
+        current_year=datetime.now().year
+    )
+
+@app.route('/admin/login', methods=['POST'])
+def admin_login():
+    password = request.form.get('password', '').strip()
+    if password == ADMIN_PASSWORD:
+        session['admin_authenticated'] = True
+        return redirect(url_for('admin'))
+    return redirect(url_for('admin', error="Invalid administrative passkey"))
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_authenticated', None)
+    return redirect(url_for('admin'))
+
+@app.route('/api/admin/analytics', methods=['GET'])
+def api_admin_analytics():
+    if not session.get('admin_authenticated'):
+        return jsonify({"status": "error", "message": "Unauthorized"}), 401
+    return jsonify(get_analytics_summary())
+
+@app.route('/api/admin/reply', methods=['POST'])
+def api_admin_reply():
+    if not session.get('admin_authenticated'):
+        return jsonify({"status": "error", "message": "Unauthorized"}), 401
+
+    payload = request.get_json(silent=True) or request.form.to_dict()
+    inquiry_id = (payload.get('inquiry_id') or '').strip()
+    reply_subject = (payload.get('subject') or '').strip()
+    reply_message = (payload.get('message') or '').strip()
+
+    if not inquiry_id or not reply_message:
+        return jsonify({"status": "error", "message": "Missing inquiry ID or reply message"}), 400
+
+    inquiries = []
+    if os.path.exists(INQUIRIES_FILE):
+        try:
+            with open(INQUIRIES_FILE, 'r', encoding='utf-8') as f:
+                inquiries = json.load(f)
+        except Exception:
+            inquiries = []
+
+    target_inq = None
+    for item in inquiries:
+        if item.get('id') == inquiry_id:
+            target_inq = item
+            break
+
+    if not target_inq:
+        return jsonify({"status": "error", "message": "Inquiry not found"}), 404
+
+    to_email = target_inq.get('email')
+    to_name = target_inq.get('name')
+    subject = reply_subject or f"Re: {target_inq.get('subject', 'Your inquiry')}"
+
+    # Dispatch email reply via SMTP
+    sent, log_msg = send_reply_email(to_email, to_name, subject, reply_body=reply_message)
+
+    # Persist updated status
+    now_iso = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    target_inq['status'] = 'replied'
+    target_inq['replied_at'] = now_iso
+    target_inq['reply_content'] = reply_message
+    target_inq['reply_dispatched'] = sent
+    target_inq['reply_log'] = log_msg
+
+    with open(INQUIRIES_FILE, 'w', encoding='utf-8') as f:
+        json.dump(inquiries, f, indent=2, ensure_ascii=False)
+
+    return jsonify({
+        "status": "success",
+        "message": f"Reply successfully transmitted to {to_email}! ({log_msg})",
+        "dispatched": sent,
+        "replied_at": now_iso
+    })
+
+@app.route('/robots.txt')
+def robots():
+    content = """User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/admin/
+
+Sitemap: https://neelrupareliya.com/sitemap.xml
+"""
+    return app.response_class(content, mimetype='text/plain')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    now_date = datetime.utcnow().strftime("%Y-%m-%d")
+    xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>https://neelrupareliya.com/</loc>
+    <lastmod>{now_date}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://neelrupareliya.com/resume</loc>
+    <lastmod>{now_date}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>"""
+    return app.response_class(xml_content, mimetype='application/xml')
 
 @app.route('/api/terminal', methods=['POST'])
 def api_terminal():
